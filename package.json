@@ -1,8 +1,8 @@
 {
-  "name": "podcast-bot",
+  "name": "podcast-web-app-template",
   "version": "2.0.0",
-  "description": "My Podcast Bot GUI",
-  "main": "gulpfile.js",
+  "description": "Podcast Web App Template",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "gulp"
@@ -10,11 +10,11 @@
   "author": "Evgeny Nadolinsky",
   "license": "ISC",
   "devDependencies": {
-    "browser-sync": "^2.24.7",
+    "browser-sync": "^2.26.3",
     "eslint": "^3.19.0",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-babel": "^7.0.1",
-    "gulp-ejs": "^3.1.3",
+    "gulp-ejs": "^3.3.0",
     "gulp-htmlmin": "^4.0.0",
     "gulp-rename": "^1.4.0",
     "stylelint": "^7.10.1",
@@ -24,6 +24,7 @@
     "gulp": "^3.9.1",
     "gulp-less": "^3.5.0",
     "jquery": "^3.3.1",
-    "jquery.cookie": "^1.4.1"
+    "jquery.cookie": "^1.4.1",
+    "natives": "^1.1.6"
   }
 }
