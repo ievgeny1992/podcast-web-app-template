@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:500,700,800,900');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,500,700,800,900');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700');
 
 @import 'media';
@@ -27,7 +27,7 @@ body{
 
 .wrap{
     box-sizing: border-box;
-    padding: 10px 10px;
+    padding: 10px 15px;
 
     @media @tablet {
         padding: 10px 15px;
@@ -38,6 +38,7 @@ body{
     }
 }
 
+/* header */
 .header{
     background-color: @block-color;
 
@@ -67,19 +68,65 @@ body{
             font-size: 20px;
         }
     }
+}
+/* header */
 
-    &__ava{
+/* avatar */
+.avatar{
+    &__wrap{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        text-align: end;
+        align-items: center;
+    }
+
+    &__img{
         width: 40px;
+        height: 40px;
         border-radius: 50%;
         border: 4px solid #009cff;
+        margin-left: 10px;
 
         @media @tablet {
-            width: 55px;
+            width: 50px;
+            height: 50px;
+        }
+    }
+
+    &__name{
+        font-family: @header-font;
+        font-weight: 500;
+        color: @text-color;
+        font-size: 12px;
+    
+        @media @tablet {
+            font-size: 13px;
+        }
+    
+        @media @desktop {
+            font-size: 14px;
         }
     }
 }
+/* avatar */
 
-.user-podcast-list{
+/* user-podcast */
+.user-podcast{
+    &__wrap{
+        padding-top: 25px;
+        padding-bottom: 0px;
+        @media @tablet {
+            padding-top: 40px;
+            padding-bottom: 10px;
+        }
+    
+        @media @desktop {
+            padding-top: 50px;
+            padding-bottom: 10px;
+        } 
+    }
 
     &__title{
         font-family: @header-font;
@@ -95,4 +142,56 @@ body{
             font-size: 28px;
         }
     }
+
+    &-item{
+        height: 100%;
+        background-color: @block-color;
+        box-sizing: border-box;
+        padding: 10px 15px;
+        // margin-bottom: 15px;
+        border-radius: 5px;
+
+        @media @tablet {
+            padding: 10px 18px;
+        }
+    
+        @media @desktop {
+            padding: 10px 20px;
+        }
+
+        &__wrap{
+            margin-bottom: 15px;
+        }
+
+        &__title{
+            font-family: @header-font;
+            font-weight: 700;
+            color: @text-color;
+            font-size: 22px;
+        
+            @media @tablet {
+                font-size: 22px;
+            }
+        
+            @media @desktop {
+                font-size: 24px;
+            }
+        }
+
+        &__description{
+            font-family: @header-font;
+            font-weight: 300;
+            color: @text-color;
+            font-size: 15px;
+        
+            @media @desktop {
+                font-size: 16px;
+            }
+        }
+
+        &__logo{
+            width: 100%;
+        }
+    }
 }
+/* user-podcast */
