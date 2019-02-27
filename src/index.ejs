@@ -7,9 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Podcast Web App Template</title>
     <!--CSS-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" type="text/css" >
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" type="text/css">
+    <link rel="stylesheet" href="css/main.css" type="text/css">
     <!--CSS-->
 </head>
 <body>
@@ -45,77 +45,42 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-4 user-podcast-item__wrap">
-                    <div class="user-podcast-item">
-                        <div class="row middle-xs">
-                            <div class="col-xs-8">
-                                <h3 class="user-podcast-item__title">
-                                    Радио-Т
-                                </h3>
-                                <p class="user-podcast-item__description">
-                                    Еженедельные разговоры на темы хайтек, высоких компьютерных технологий, гаджетов, облаков, программирования и прочего интересного из мира ИТ.
-                                </p>
-                            </div>
-                            <div class="col-xs-4">
-                                <img src="img/radiot.jpg" class="user-podcast-item__logo" alt="radiot">
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-xs-12 col-sm-6 col-md-4 user-podcast-item__wrap">
-                    <div class="user-podcast-item">
-                        <div class="row middle-xs">
-                            <div class="col-xs-8">
-                                <h3 class="user-podcast-item__title">
-                                    UWP
-                                </h3>
-                                <p class="user-podcast-item__description">
-                                    Невыдуманные рассказы из американской жизни
-                                </p>
-                            </div>
-                            <div class="col-xs-4">
-                                <img src="img/uwp.jpg" class="user-podcast-item__logo" alt="uwp">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <% const userPodcastList = [
+                    {title: 'Радио-Т', description: 'Еженедельные разговоры на темы хайтек, высоких компьютерных технологий, гаджетов, облаков, программирования и прочего интересного из мира ИТ.', image: 'radiot' ,url: 'https://radio-t.com/'},
+                    {title: 'UWP', description: 'Невыдуманные рассказы из американской жизни', image: 'uwp' ,url: 'https://podcast.umputun.com/'},
+                    {title: 'Отвратительные мужики', description: 'Не унывай и не тупей! Независимый ресурс о знаниях и развлечениях, подкаст и коммьюнити.', image: 'disgustingmen' ,url: 'https://disgustingmen.com/'},
+                    {title: 'Завтракаст', description: 'Завтрашний день в технологиях, играх, медиа и интернете. Обо всём понемногу, с юмором и хорошей музыкой. 18+', image: 'zavtracast' ,url: 'https://zavtracast.ru/'},
+                ]; %>
 
-                <div class="col-xs-12 col-sm-6 col-md-4 user-podcast-item__wrap">
-                    <div class="user-podcast-item">
-                        <div class="row middle-xs">
-                            <div class="col-xs-8">
-                                <h3 class="user-podcast-item__title">
-                                    Отвратительные мужики
-                                </h3>
-                                <p class="user-podcast-item__description">
-                                    Не унывай и не тупей! Независимый ресурс о знаниях и развлечениях, подкаст и коммьюнити.
-                                </p>
-                            </div>
-                            <div class="col-xs-4">
-                                <img src="img/disgustingmen.jpg" class="user-podcast-item__logo" alt="disgustingmen">
+                <% userPodcastList.forEach((item) => { %>
+                    <div class="col-xs-12 col-sm-6 col-md-4 user-podcast-item__wrap">
+                        <div class="user-podcast-item">
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div class="user-podcast-item__info">
+                                        <h3 class="user-podcast-item__title">
+                                            <%= item.title %>
+                                        </h3>
+                                        <p class="user-podcast-item__description">
+                                            <%= item.description %>
+                                        </p>
+                                        <a href="<%= item.url %>" class="user-podcast-item__link">
+                                            <i class="icon-globe"></i>
+                                            <%= item.url %>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="user-podcast-item__logo-wrap">
+                                        <img src="img/<%= item.image %>.jpg" class="user-podcast-item__logo" alt="<%= item.image %>">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                <% }) %>
 
-                <div class="col-xs-12 col-sm-6 col-md-4 user-podcast-item__wrap">
-                    <div class="user-podcast-item">
-                        <div class="row middle-xs">
-                            <div class="col-xs-8">
-                                <h3 class="user-podcast-item__title">
-                                    Завтракаст
-                                </h3>
-                                <p class="user-podcast-item__description">
-                                    Завтрашний день в технологиях, играх, медиа и интернете. Обо всём понемногу, с юмором и хорошей музыкой. 18+
-                                </p>
-                            </div>
-                            <div class="col-xs-4">
-                                <img src="img/zavtracast.jpg" class="user-podcast-item__logo" alt="zavtracast">
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>

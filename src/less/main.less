@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700');
 
 @import 'media';
+@import 'fontello';
 
 /* Fonts */
 @header-font: 'Montserrat', sans-serif;
@@ -147,16 +148,19 @@ body{
         height: 100%;
         background-color: @block-color;
         box-sizing: border-box;
-        padding: 10px 15px;
-        // margin-bottom: 15px;
         border-radius: 5px;
+        padding: 15px 15px;
 
         @media @tablet {
-            padding: 10px 18px;
+            padding: 18px 18px;
         }
     
         @media @desktop {
-            padding: 10px 20px;
+            padding: 20px 20px;
+        }
+
+        &__info{
+
         }
 
         &__wrap{
@@ -182,15 +186,32 @@ body{
             font-family: @header-font;
             font-weight: 300;
             color: @text-color;
-            font-size: 15px;
+            font-size: 14px;
         
             @media @desktop {
-                font-size: 16px;
+                font-size: 15px;
+            }
+        }
+
+        &__link{
+            font-family: @header-font;
+            font-weight: 500;
+            text-decoration: none;
+            color: #6B7282;
+            font-size: 12px;
+        
+            @media @desktop {
+                font-size: 13px;
             }
         }
 
         &__logo{
             width: 100%;
+            border-radius: 5px;
+
+            &-wrap{
+
+            }
         }
     }
 }

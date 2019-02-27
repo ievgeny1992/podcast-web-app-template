@@ -30,6 +30,11 @@ gulp.task('img', () => {
         .pipe(gulp.dest('./dist/img'));
 });
 
+gulp.task('font', () => {
+    gulp.src('src/font/**/*.*')
+        .pipe(gulp.dest('./dist/font'));
+});
+
 gulp.task('js', () => {
     gulp.src('src/js/main.js')
         .pipe(webpack({
@@ -55,4 +60,4 @@ gulp.watch('src/**/*.ejs', ['html']);
 gulp.watch('src/img/**/*.*', ['img']);
 gulp.watch('src/js/**/*.*', ['js']);
 
-gulp.task('default', ['styles', 'html', 'img', 'js']);
+gulp.task('default', ['styles', 'html', 'img', 'js', 'font']);
