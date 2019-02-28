@@ -13,6 +13,12 @@
 @text-color: #dedee0;
 @bg-color: #151720;
 @block-color: #282b35;
+@highlight-color_secondary: #009cff;
+@highlight-color_primary: #e46a68;
+
+// @text-color: #383838;
+// @bg-color: #f5f7fc;
+// @block-color: #ffffff;
 /* Colors */
 
 body{
@@ -38,6 +44,39 @@ body{
         padding: 10px 20px;
     }
 }
+
+.podcast-app{
+    &__title{
+        font-family: @header-font;
+        font-weight: 500;
+        color: @text-color;
+        font-size: 24px;
+    
+        @media @tablet {
+            font-size: 26px;
+        }
+    
+        @media @desktop {
+            font-size: 28px;
+        }
+    }
+}
+
+
+/* Plyr */
+.plyr--audio .plyr__controls{
+    background: transparent;
+}
+
+.plyr--audio .plyr__control.plyr__tab-focus, .plyr--audio .plyr__control:hover, .plyr--audio .plyr__control[aria-expanded=true]{
+    background: none;
+    outline: none;
+}
+
+.plyr--full-ui input[type=range]{
+    color: @highlight-color_primary;
+}
+/* Plyr */
 
 /* header */
 .header{
@@ -87,7 +126,7 @@ body{
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        border: 4px solid #009cff;
+        border: 4px solid @highlight-color_primary;
         margin-left: 10px;
 
         @media @tablet {
@@ -97,12 +136,13 @@ body{
     }
 
     &__name{
+        visibility: hidden;
         font-family: @header-font;
         font-weight: 500;
         color: @text-color;
-        font-size: 12px;
     
         @media @tablet {
+            visibility: visible;
             font-size: 13px;
         }
     
@@ -171,7 +211,7 @@ body{
             font-family: @header-font;
             font-weight: 700;
             color: @text-color;
-            font-size: 22px;
+            font-size: 19px;
         
             @media @tablet {
                 font-size: 22px;
@@ -194,25 +234,152 @@ body{
         }
 
         &__link{
+            display: block;
             font-family: @header-font;
             font-weight: 500;
             text-decoration: none;
             color: #6B7282;
-            font-size: 12px;
+            font-size: 10px;
         
             @media @desktop {
-                font-size: 13px;
+                font-size: 12px;
             }
         }
 
         &__logo{
             width: 100%;
             border-radius: 5px;
-
-            &-wrap{
-
-            }
         }
     }
 }
 /* user-podcast */
+
+/* last-podcast */
+.last-podcast{
+    &__wrap{
+        padding-top: 25px;
+        padding-bottom: 0px;
+        @media @tablet {
+            padding-top: 40px;
+            padding-bottom: 10px;
+        }
+    
+        @media @desktop {
+            padding-top: 50px;
+            padding-bottom: 10px;
+        } 
+    }
+
+    &-item{
+        box-sizing: border-box;
+        display: flex;
+        flex: 0 1 auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+
+        &__title{
+            font-family: @header-font;
+            font-weight: 700;
+            color: @text-color;
+            font-size: 19px;
+        
+            @media @tablet {
+                font-size: 26px;
+            }
+        
+            @media @desktop {
+                font-size: 28px;
+            }
+        }
+
+        &__link{
+            display: block;
+            font-family: @header-font;
+            font-weight: 500;
+            text-decoration: none;
+            color: #6B7282;
+            font-size: 10px;
+        
+            @media @desktop {
+                font-size: 12px;
+            }
+        }
+
+        &__logo{
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        &__wrap{
+            padding: 15px 15px;
+
+            @media @tablet {
+                padding: 18px 18px;
+            }
+        
+            @media @desktop {
+                padding: 20px 20px;
+            }
+        }
+
+        &__right{
+            background-color: @block-color;
+            flex-basis: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+
+            @media @tablet {
+                flex-basis: 50%;
+                max-width: 50%;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 0px;
+                border-bottom-left-radius: 5px;
+            }
+
+            @media @desktop {
+                flex-basis: 41.66666667%;
+                max-width: 41.66666667%;
+            }
+        }
+
+        &__left{
+            background-color: @block-color;
+            flex-basis: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+
+            @media @tablet {
+                flex-basis: 50%;
+                max-width: 50%;
+                border-top-right-radius: 5px;
+                border-bottom-left-radius: 0px;
+                border-bottom-right-radius: 5px;
+            }
+
+            @media @desktop {
+                flex-basis: 58.33333333%;
+                max-width: 58.33333333%;
+            }
+        }
+        
+
+        &__list{
+            font-family: @header-font;
+            font-weight: 300;
+            color: @text-color;
+            font-size: 14px;
+            line-height: 23px;
+            margin-top: 0px; 
+
+            @media @desktop {
+                font-size: 15px;
+            }
+        }
+    }
+}
+/* last-podcast */
