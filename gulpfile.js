@@ -65,4 +65,4 @@ gulp.watch('src/**/*.ejs', ['html']);
 gulp.watch('src/img/**/*.*', ['img']);
 gulp.watch('src/js/**/*.*', ['js']);
 
-gulp.task('default', ['styles', 'html', 'img', 'js', 'font']);
+gulp.task('default', ['styles', 'html', 'img', 'font']);

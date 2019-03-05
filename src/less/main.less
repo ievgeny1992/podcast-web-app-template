@@ -65,7 +65,8 @@ body{
 
 /* Plyr */
 .plyr--audio .plyr__controls{
-    background: transparent;
+    // background-color: @bg-color;
+    border-radius: 5px;
 }
 
 .plyr--audio .plyr__control.plyr__tab-focus, .plyr--audio .plyr__control:hover, .plyr--audio .plyr__control[aria-expanded=true]{
@@ -189,14 +190,14 @@ body{
         background-color: @block-color;
         box-sizing: border-box;
         border-radius: 5px;
-        padding: 15px 15px;
+        padding: 20px;
 
         @media @tablet {
-            padding: 18px 18px;
+            padding: 25px;
         }
     
         @media @desktop {
-            padding: 20px 20px;
+            padding: 30px;
         }
 
         &__info{
@@ -211,6 +212,7 @@ body{
             font-family: @header-font;
             font-weight: 700;
             color: @text-color;
+            margin: 0px;
             font-size: 19px;
         
             @media @tablet {
@@ -218,7 +220,7 @@ body{
             }
         
             @media @desktop {
-                font-size: 24px;
+                font-size: 23px;
             }
         }
 
@@ -227,6 +229,7 @@ body{
             font-weight: 300;
             color: @text-color;
             font-size: 14px;
+            line-height: 20px;
         
             @media @desktop {
                 font-size: 15px;
@@ -247,8 +250,12 @@ body{
         }
 
         &__logo{
-            width: 100%;
+            width: 90%;
             border-radius: 5px;
+
+            @media @tablet {
+                width: 100%;
+            }
         }
     }
 }
@@ -271,12 +278,19 @@ body{
     }
 
     &-item{
+        background-color: @block-color;
+        border-radius: 5px;
         box-sizing: border-box;
-        display: flex;
-        flex: 0 1 auto;
-        flex-direction: row;
-        flex-wrap: wrap;
         margin-bottom: 15px;
+        padding: 20px;
+
+        @media @tablet {
+            padding: 25px;
+        }
+    
+        @media @desktop {
+            padding: 30px;
+        }
 
         &__title{
             font-family: @header-font;
@@ -285,11 +299,11 @@ body{
             font-size: 19px;
         
             @media @tablet {
-                font-size: 26px;
+                font-size: 22px;
             }
         
             @media @desktop {
-                font-size: 28px;
+                font-size: 23px;
             }
         }
 
@@ -307,66 +321,25 @@ body{
         }
 
         &__logo{
-            width: 100%;
+            width: 90%;
             border-radius: 5px;
+
+            @media @tablet {
+                width: 100%;
+            }
         }
 
         &__wrap{
-            padding: 15px 15px;
+            padding: 20px;
 
             @media @tablet {
-                padding: 18px 18px;
+                padding: 25px;
             }
         
             @media @desktop {
-                padding: 20px 20px;
+                padding: 30px;
             }
-        }
-
-        &__right{
-            background-color: @block-color;
-            flex-basis: 100%;
-            max-width: 100%;
-            box-sizing: border-box;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-
-            @media @tablet {
-                flex-basis: 50%;
-                max-width: 50%;
-                border-top-left-radius: 5px;
-                border-top-right-radius: 0px;
-                border-bottom-left-radius: 5px;
-            }
-
-            @media @desktop {
-                flex-basis: 41.66666667%;
-                max-width: 41.66666667%;
-            }
-        }
-
-        &__left{
-            background-color: @block-color;
-            flex-basis: 100%;
-            max-width: 100%;
-            box-sizing: border-box;
-            border-bottom-left-radius: 5px;
-            border-bottom-right-radius: 5px;
-
-            @media @tablet {
-                flex-basis: 50%;
-                max-width: 50%;
-                border-top-right-radius: 5px;
-                border-bottom-left-radius: 0px;
-                border-bottom-right-radius: 5px;
-            }
-
-            @media @desktop {
-                flex-basis: 58.33333333%;
-                max-width: 58.33333333%;
-            }
-        }
-        
+        }   
 
         &__list{
             font-family: @header-font;

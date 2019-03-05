@@ -63,16 +63,16 @@
                     <div class="col-xs-12 col-sm-6 col-md-4 user-podcast-item__wrap wow fadeIn" data-wow-delay="<%= item.delay %>s">
                         <div class="user-podcast-item">
                             <div class="row middle-xs">
+                                <div class="col-xs-4 col-sm-3">
+                                    <div class="user-podcast-item__logo-wrap">
+                                        <img src="img/<%= item.image %>.jpg" class="user-podcast-item__logo" alt="<%= item.image %>">
+                                    </div>
+                                </div>
                                 <div class="col-xs-7 col-sm-9">
                                     <div class="user-podcast-item__info">
                                         <h3 class="user-podcast-item__title">
                                             <%= item.title %>
                                         </h3>
-                                    </div>
-                                </div>
-                                <div class="col-xs-4 col-sm-3 first-xs last-sm">
-                                    <div class="user-podcast-item__logo-wrap">
-                                        <img src="img/<%= item.image %>.jpg" class="user-podcast-item__logo" alt="<%= item.image %>">
                                     </div>
                                 </div>
                             </div>
@@ -105,44 +105,54 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12">
-                    <div class="last-podcast-item">
-                        <div class="last-podcast-item__wrap last-podcast-item__right">
-                            <div class="row middle-xs">
-                                <div class="col-xs-7 col-sm-9">
-                                    <h3 class="last-podcast-item__title">
-                                        Радио-Т 638
-                                    </h3>
-                                    <a href="https://radio-t.com/p/2019/02/23/podcast-638/" class="last-podcast-item__link">
-                                        <i class="icon-globe"></i>
-                                        https://radio-t.com/p/2019/02/23/podcast-638/
-                                    </a>
+
+
+                <% 
+                    const lastPodcastList = [
+                        {title: 'Радио-Т 638', audio: 'http://cdn.radio-t.com/rt_podcast638.mp3', delay: '0'},
+                        {title: 'Радио-Т 638', audio: 'http://cdn.radio-t.com/rt_podcast638.mp3', delay: '0'},
+                        {title: 'Радио-Т 638', audio: 'http://cdn.radio-t.com/rt_podcast638.mp3', delay: '0'},
+                        {title: 'Радио-Т 638', audio: 'http://cdn.radio-t.com/rt_podcast638.mp3', delay: '0'},
+                        {title: 'Радио-Т 638', audio: 'http://cdn.radio-t.com/rt_podcast638.mp3', delay: '0'},
+                        {title: 'Радио-Т 638', audio: 'http://cdn.radio-t.com/rt_podcast638.mp3', delay: '0'},
+                        {title: 'Радио-Т 638', audio: 'http://cdn.radio-t.com/rt_podcast638.mp3', delay: '0'},
+                        {title: 'Радио-Т 638', audio: 'http://cdn.radio-t.com/rt_podcast638.mp3', delay: '0'}
+                    ]; 
+                
+                    var i = 0.2;
+                %>
+
+                <% lastPodcastList.forEach((item) => { %>
+
+                    <div class="col-xs-12 col-sm-6 col-md-4 wow fadeIn" data-wow-delay="<%= item.delay + i %>s">
+                            <div class="last-podcast-item">
+                                <div class="row middle-xs">
+                                    <div class="col-xs-4 col-sm-3">
+                                        <div class="last-podcast-item__logo-wrap">
+                                            <img src="img/radiot.jpg" class="last-podcast-item__logo" alt="radiot">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-7 col-sm-9">
+                                        <h3 class="last-podcast-item__title">
+                                            <%= item.title %>
+                                        </h3>
+                                        <!-- <a href="https://radio-t.com/p/2019/02/23/podcast-638/" class="last-podcast-item__link">
+                                            <i class="icon-globe"></i>
+                                            https://radio-t.com/p/2019/02/23/podcast-638/
+                                        </a> -->
+                                    </div>
                                 </div>
-                                <div class="col-xs-4 col-sm-3 first-xs last-sm">
-                                    <div class="last-podcast-item__logo-wrap">
-                                        <img src="img/radiot.jpg" class="last-podcast-item__logo" alt="radiot">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                            <audio class="js-player" controls>
+                                                    <source src="<%= item.audio %>" type="audio/mp3" />
+                                            </audio>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="last-podcast-item__wrap last-podcast-item__left">
-                            <ul class="last-podcast-item__list">
-                                <li>Samsung показал складной Galaxy</li>
-                                <li>Galaxy Fold ждет успех. Или нет</li>
-                                <li>Долой SPA</li>
-                                <li>RethinkDB: почему мы закрылись</li>
-                                <li>Apple планирует захватить TV</li>
-                                <li>Fedora Atomic закрыт</li>
-                                <li>Уход Splunk</li>
-                                <li>Как не делать формы логина</li>
-                                <li>Темы слушателей</li>
-                            </ul>
-                            <audio class="js-player" controls>
-                                <source src="http://cdn.radio-t.com/rt_podcast638.mp3" type="audio/mp3" />
-                            </audio>
-                        </div>
-                    </div>
-                </div>
+                    <% i += 0.3;  %>
+                <% }) %>
             </div>
         </div>
     </section>
@@ -150,11 +160,11 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/plyr/3.5.2/plyr.min.js"></script>
-    <!--JavaScript-->
-
+    <script src="js/main.js"></script>
+    
     <script>
-        const players = Array.from(document.querySelectorAll('.js-player')).map(p => new Plyr(p));
+        const players = Array.from(document.querySelectorAll('.js-player')).map(player => new Plyr(player));
     </script>
-
+    <!--JavaScript-->
 </body>
 </html>
