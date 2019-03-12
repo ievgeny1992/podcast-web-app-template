@@ -4,52 +4,50 @@ const Tamplate = require('./templates.js');
 class Loader{
 
     constructor(url){
-        this.url = url;
-        this.allPodcastName = [];        
+        this.url = url;  
         this.allPodcasts = [];
 
         this.template = new Tamplate();
-        this.GetPodcastList();
+        this.GetPodcast();
     }
 
-    GetPodcastList(){
-        fetch(this.url + 'podcastList')
-            .then(response => {
-                this.template.CreateIndicationServerStatus(response.status, this.url);
-                this.template.CreateAddPodcast(this.url);
-                return response.json();
-            })
-            .then(json => {
-                this.allPodcastName = json;
-            })
-            .then(()=> {
-                this.GetPodcast(); 
-            })
-            .catch((error) => {
-                console.log('Error: ' + error);
-            });
-    }``
-
-    GetPodcast(name, title, site){
-        fetch(this.url + 'db')
+    GetPodcast(){
+        var url = this.url + 'all_podcast';
+        fetch(url)
             .then(response => {
                 return response.json();
             })
             .then(json => {
                 this.allPodcasts = json;
-
-                this.allPodcastName.forEach((item, index) => {
-                    const length = this.allPodcasts[item.name].length;
-                    this.allPodcastName[index].length = length;
+                this.allPodcasts.forEach(podcast => {
+                    this.template.CreatePodcastList(podcast);                    
                 });
-
-                this.template.CreatePodcastList(this.allPodcastName);
-                this.template.CreateLastPodcast(this.allPodcasts, this.allPodcastName);
-
+            })
+            .then(() => {
+                this.GetLastPodcast();
             })
             .catch((error) => {
                 console.log('Error: ' + error);
             });
+    }
+
+    GetLastPodcast(){
+        this.allPodcasts.forEach(podcast => {
+            var url = this.url + 'get_last_podcast/' + podcast.id;
+            fetch(url)
+                .then(response => {
+                    return response.json();
+                })
+                .then(json => {
+                    this.template.CreateLastPodcast(json[0], podcast.cover);  
+                })
+                .then(() => {
+                    this.template.LoadPlayer();
+                })
+                .catch((error) => {
+                    console.log('Error: ' + error);
+                });                
+        });
     }
 }
 

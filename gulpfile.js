@@ -6,6 +6,7 @@ const cleanCSS = require('gulp-clean-css');
 const rename = require('gulp-rename');
 const ejs = require('gulp-ejs');
 const gutil = require('gulp-util');
+// const babel = require('gulp-babel');
 const webpack = require('webpack-stream');
 const htmlmin = require('gulp-htmlmin');
 
@@ -44,12 +45,13 @@ gulp.task('js', () => {
     gulp.src('src/js/main.js')
         .pipe(webpack({
             output: {
-              filename: 'js/main.js',
+                filename: 'js/main.js',
             },
-          }))
-          .pipe(gulp.dest('dist/'));
-
-
+        }))
+        // .pipe(babel({
+        //     presets: ['@babel/env']
+        // }))
+        .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('html', () => {
@@ -65,4 +67,4 @@ gulp.watch('src/**/*.ejs', ['html']);
 gulp.watch('src/img/**/*.*', ['img']);
 gulp.watch('src/js/**/*.*', ['js']);
 
-gulp.task('default', ['styles', 'html', 'img', 'font']);
+gulp.task('default', ['styles','js', 'html', 'img', 'font']);

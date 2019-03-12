@@ -28,74 +28,71 @@ class Tamplate{
         this.serverStatus.append(segment);
     }
 
-    CreatePodcastList(allPodcasName){
-        allPodcasName.forEach((podcastName) => {
-            const segment = $('<div>').attr({ class : 'ui segment wow animated fadeInUp' });
-            const item = $('<div>').attr({ class : 'item' });
-            const content = $('<div>').attr({ class : 'content' });
-            const item__title = $('<div>').attr({ class : 'item__title wow animated fadeInUp' }).text(podcastName.title);
-            const label = $('<div>').attr({ class : 'ui floating label-color green label circular wow animated fadeInUp' }).text(podcastName.length);
-            const link = $('<a>').attr({ href : podcastName.site, target : '_blank', class : 'item__link wow animated fadeInUp' }).text(podcastName.site);
-
-            content.append(item__title);
-            content.append(label);
-            content.append(link);
-
-            item.append(content);
-            segment.append(item);
-
-            this.podcastList.append(segment);
-
-        });
+    CreatePodcastList(podcast){
+        this.podcastList.append(`
+            <div class="col-xs-12 col-sm-6 col-md-4 user-podcast-item__wrap">
+                <div class="user-podcast-item">
+                    <div class="row middle-xs">
+                        <div class="col-xs-4 col-sm-3">
+                            <div class="user-podcast-item__logo-wrap">
+                                <img src="${podcast.cover}" class="user-podcast-item__logo" alt="${podcast.title}">
+                            </div>
+                        </div>
+                        <div class="col-xs-7 col-sm-9">
+                            <div class="user-podcast-item__info">
+                                <h3 class="user-podcast-item__title">
+                                    ${podcast.title}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p class="user-podcast-item__description">
+                                ${podcast.description}
+                            </p>
+                            <a href="${podcast.link}" class="user-podcast-item__link">
+                                <i class="icon-globe"></i>
+                                ${podcast.link}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
     }
 
-    CreateLastPodcast(allPodcasts, allPodcastName){
-        allPodcastName.forEach(podcast => {
-            const length = podcast.length - 1;
-            const name = podcast.name;
-
-            const lastPodcast = allPodcasts[name][length];
-
-            const segment = $('<div>').attr({ class : 'ui segment wow animated fadeInUp segment-last-podcast ' + name });
-            const item = $('<div>').attr({ class : 'item' });
-            const content = $('<div>').attr({ class : 'content' });
-            const item__name = $('<div>').attr({ class : 'item__name' }).text(lastPodcast.title);
-            const item__date = $('<div>').attr({ class : 'item__date' }).text(lastPodcast.date);
-            const topicList = $('<ul>').attr({ class : 'ui list' });
-            const player = $('<audio>').attr({ class : 'js-player' });
-            const source = $('<source>').attr({ type : 'audio/mp3', src : lastPodcast.file });
-            const icon__calendar = $('<i>').attr({ class : 'calendar alternate outline icon' });
-            const icon__microphone = $('<i>').attr({ class : 'microphone icon' });
-
-            player.append(source);
-
-            item__name.prepend(icon__microphone);
-            item__date.prepend(icon__calendar);
-    
-            content.append(item__name);
-            content.append(item__date);    
-            content.append(topicList);
-            content.append(player);
-            // content.prepend(label);
-            item.append(content);
-            segment.append(item);
-    
-            if ( lastPodcast.topic !== undefined && lastPodcast.topic !== '' ){
-                let topics = lastPodcast.topic.slice(0, -1);
-                topics = topics.split(';');
-                topics.forEach( function(topic){
-                    const item = $('<li>').text(topic);
-                    topicList.append(item);
-                });
-            }
-    
-            this.lastPodcast.append(segment);
-            this.LoadPlayer();
-
-        });
-
-        // const label = $('<a>').attr({ class : 'ui orange right ribbon label js-new' }).text('Reviews');
-        
+    CreateLastPodcast(lastPodcast, cover){
+        var date = new Date(lastPodcast.published); 
+        date = date.toLocaleString("ru", {day: '2-digit', month: '2-digit', year: '2-digit'});
+        this.lastPodcast.append(`
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="last-podcast-item">
+                    <div class="row middle-xs">
+                        <div class="col-xs-4 col-sm-3">
+                            <div class="last-podcast-item__logo-wrap">
+                                <img src="${cover}" class="last-podcast-item__logo" alt="${lastPodcast.title}">
+                            </div>
+                        </div>
+                        <div class="col-xs-7 col-sm-9">
+                            <h3 class="last-podcast-item__title">
+                                ${lastPodcast.title}
+                            </h3>
+                            <p class="last-podcast-item__date">
+                                ${date}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row last-podcast-item__player-wrap">
+                        <div class="col-xs-12">
+                            <audio class="js-player" controls>
+                                    <source src="${lastPodcast.mp3}" type="audio/mp3" />
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
     }
 
     CreateAddPodcast(url){

@@ -5,8 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" href="img/favicon.svg">
-    <link rel=icon href="img/favicon.svg" sizes="any" type="image/svg+xml">
+    <link rel="icon" href="img/icon.png">
     <title>Podcast Web App Template</title>
     <!--CSS-->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" type="text/css">
@@ -32,7 +31,9 @@
                                 <span class="avatar__name">
                                     Evgeny Nadolinsky
                                 </span>
-                                <img src="img/ava.jpg" class="avatar__img" alt="ava">
+                                <div class="avatar-img__wrap">
+                                    <img src="img/ava.jpg" class="avatar__img" alt="ava">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -41,7 +42,7 @@
         </div>
     </header>
 
-    <section class="user-podcast">
+    <section class="wow fadeIn">
         <div class="container wrap user-podcast__wrap">
             <div class="row">
                 <div class="col-xs-12">
@@ -50,52 +51,13 @@
                     </h2>
                 </div>
             </div>
-            <div class="row">
-
-                <% const userPodcastList = [
-                    {title: 'Радио-Т', description: 'Еженедельные разговоры на темы хайтек, высоких компьютерных технологий, гаджетов, облаков, программирования и прочего интересного из мира ИТ.', image: 'radiot' ,url: 'https://radio-t.com/', delay: '0'},
-                    {title: 'UWP', description: 'Невыдуманные рассказы из американской жизни', image: 'uwp' ,url: 'https://podcast.umputun.com/', delay: '0.3'},
-                    {title: 'Отвратительные мужики', description: 'Не унывай и не тупей! Независимый ресурс о знаниях и развлечениях, подкаст и коммьюнити.', image: 'disgustingmen' ,url: 'https://disgustingmen.com/', delay: '0.6'},
-                    {title: 'Завтракаст', description: 'Завтрашний день в технологиях, играх, медиа и интернете. Обо всём понемногу, с юмором и хорошей музыкой. 18+', image: 'zavtracast' ,url: 'https://zavtracast.ru/', delay: '0.9'},
-                ]; %>
-
-                <% userPodcastList.forEach((item) => { %>
-                    <div class="col-xs-12 col-sm-6 col-md-4 user-podcast-item__wrap wow fadeIn" data-wow-delay="<%= item.delay %>s">
-                        <div class="user-podcast-item">
-                            <div class="row middle-xs">
-                                <div class="col-xs-4 col-sm-3">
-                                    <div class="user-podcast-item__logo-wrap">
-                                        <img src="img/<%= item.image %>.jpg" class="user-podcast-item__logo" alt="<%= item.image %>">
-                                    </div>
-                                </div>
-                                <div class="col-xs-7 col-sm-9">
-                                    <div class="user-podcast-item__info">
-                                        <h3 class="user-podcast-item__title">
-                                            <%= item.title %>
-                                        </h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <p class="user-podcast-item__description">
-                                        <%= item.description %>
-                                    </p>
-                                    <a href="<%= item.url %>" class="user-podcast-item__link">
-                                        <i class="icon-globe"></i>
-                                        <%= item.url %>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <% }) %>
+            <div class="row js-podcast-list">
 
             </div>
         </div>
     </section class="last-podcast">
 
-    <section>
+    <section class="wow fadeIn">
         <div class="container wrap last-podcast__wrap">
             <div class="row">
                 <div class="col-xs-12">
@@ -104,55 +66,8 @@
                     </h2>
                 </div>
             </div>
-            <div class="row">
+            <div class="row js-last-podcast">
 
-
-                <% 
-                    const lastPodcastList = [
-                        {title: 'Радио-Т 638', audio: 'http://cdn.radio-t.com/rt_podcast638.mp3', delay: '0'},
-                        {title: 'Радио-Т 638', audio: 'http://cdn.radio-t.com/rt_podcast638.mp3', delay: '0'},
-                        {title: 'Радио-Т 638', audio: 'http://cdn.radio-t.com/rt_podcast638.mp3', delay: '0'},
-                        {title: 'Радио-Т 638', audio: 'http://cdn.radio-t.com/rt_podcast638.mp3', delay: '0'},
-                        {title: 'Радио-Т 638', audio: 'http://cdn.radio-t.com/rt_podcast638.mp3', delay: '0'},
-                        {title: 'Радио-Т 638', audio: 'http://cdn.radio-t.com/rt_podcast638.mp3', delay: '0'},
-                        {title: 'Радио-Т 638', audio: 'http://cdn.radio-t.com/rt_podcast638.mp3', delay: '0'},
-                        {title: 'Радио-Т 638', audio: 'http://cdn.radio-t.com/rt_podcast638.mp3', delay: '0'}
-                    ]; 
-                
-                    var i = 0.2;
-                %>
-
-                <% lastPodcastList.forEach((item) => { %>
-
-                    <div class="col-xs-12 col-sm-6 col-md-4 wow fadeIn" data-wow-delay="<%= item.delay + i %>s">
-                            <div class="last-podcast-item">
-                                <div class="row middle-xs">
-                                    <div class="col-xs-4 col-sm-3">
-                                        <div class="last-podcast-item__logo-wrap">
-                                            <img src="img/radiot.jpg" class="last-podcast-item__logo" alt="radiot">
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-7 col-sm-9">
-                                        <h3 class="last-podcast-item__title">
-                                            <%= item.title %>
-                                        </h3>
-                                        <!-- <a href="https://radio-t.com/p/2019/02/23/podcast-638/" class="last-podcast-item__link">
-                                            <i class="icon-globe"></i>
-                                            https://radio-t.com/p/2019/02/23/podcast-638/
-                                        </a> -->
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                            <audio class="js-player" controls>
-                                                    <source src="<%= item.audio %>" type="audio/mp3" />
-                                            </audio>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <% i += 0.3;  %>
-                <% }) %>
             </div>
         </div>
     </section>
@@ -161,10 +76,6 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/plyr/3.5.2/plyr.min.js"></script>
     <script src="js/main.js"></script>
-    
-    <script>
-        const players = Array.from(document.querySelectorAll('.js-player')).map(player => new Plyr(player));
-    </script>
     <!--JavaScript-->
 </body>
 </html>

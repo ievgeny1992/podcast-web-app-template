@@ -10,6 +10,8 @@
   "author": "Evgeny Nadolinsky",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
     "browser-sync": "^2.26.3",
     "eslint": "^3.19.0",
     "gulp-autoprefixer": "^4.0.0",
