@@ -65,6 +65,10 @@ class Tamplate{
     CreateLastPodcast(lastPodcast, cover){
         var date = new Date(lastPodcast.published); 
         date = date.toLocaleString("ru", {day: '2-digit', month: '2-digit', year: '2-digit'});
+
+        var content = $.parseHTML(lastPodcast.content);
+        content = $(content).text();
+
         this.lastPodcast.append(`
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <div class="last-podcast-item">
@@ -79,12 +83,16 @@ class Tamplate{
                                 ${lastPodcast.title}
                             </h3>
                             <p class="last-podcast-item__date">
+                                <i class="icon-calendar"></i>
                                 ${date}
                             </p>
                         </div>
                     </div>
-                    <div class="row last-podcast-item__player-wrap">
+                    <div class="row">
                         <div class="col-xs-12">
+                            <p class="last-podcast-item__content">
+                                ${content}
+                            </p>
                             <audio class="js-player" controls>
                                     <source src="${lastPodcast.mp3}" type="audio/mp3" />
                             </audio>
