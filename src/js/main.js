@@ -1,7 +1,8 @@
 const Loader = require('./Loader');
 const $ = require("jquery");
+const config = require('./config.json');
 
-const url = 'http://192.168.31.139:3333/';
+const url = config.host;
 
 class App {
     InitLoader() {
@@ -10,10 +11,9 @@ class App {
 
     Init() {
         this.InitLoader();
+        new WOW().init();
     }
 }
 
 const app = new App();
 app.Init();
-
-new WOW().init();

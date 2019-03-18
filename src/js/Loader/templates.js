@@ -9,25 +9,6 @@ class Tamplate{
         this.addPodcast = $('.js-add-podcast');
     }
 
-    CreateIndicationServerStatus(status, url){
-        const segment = $('<div>').attr({ class : 'ui segment wow animated fadeInUp' });
-        const item = $('<div>').attr({ class : 'item' });
-        const label = $('<div>').attr({ class : 'ui label' });
-        const link = $('<a>').attr({ href : url , target : '_blank', class : 'server-link'}).text(url);
-
-        if ( status == 200 ) {
-            label.addClass('green').text('Online');
-            item.append(label);
-            item.append(link);
-        } else {
-            label.addClass('red').text('Offline');
-            item.append(label);
-        }
-
-        segment.append(item);
-        this.serverStatus.append(segment);
-    }
-
     CreatePodcastList(podcast){
         this.podcastList.append(`
             <div class="col-xs-12 col-sm-6 col-md-4 user-podcast-item__wrap">
@@ -69,9 +50,9 @@ class Tamplate{
         var content = $.parseHTML(lastPodcast.content);
         content = $(content).text();
 
-        this.lastPodcast.append(`
+        const $lastPodcast = $(`
             <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="last-podcast-item">
+                <div class="last-podcast-item" data-id="${lastPodcast.id}">
                     <div class="row middle-xs">
                         <div class="col-xs-4 col-sm-3">
                             <div class="last-podcast-item__logo-wrap">
@@ -101,42 +82,19 @@ class Tamplate{
                 </div>
             </div>
         `);
-    }
 
-    CreateAddPodcast(url){
-        const segment = $('<div>').attr({ class : 'ui segment wow animated fadeInUp' });
-        const form = $('<form>').attr({ class : 'ui form', method: 'post', action:  url + 'podcastList'});
+        if( !lastPodcast.listen_flag ){
+            const $label = `
+                <div class="last-podcast-item__new-label wow animated rubberBand" data-wow-delay="0.4s">
+                    New
+                </div>
+            `;
 
-        const field_name = $('<div>').attr({ class : 'field' });
-        const field_title = $('<div>').attr({ class : 'field' });
-        const field_rss = $('<div>').attr({ class : 'field' });
-        const field_website = $('<div>').attr({ class : 'field' });        
-
-        const name = $('<input>').attr({ type : 'text', class : 'wow animated fadeInUp', name : 'name', placeholder : 'Name' });  
-        const title = $('<input>').attr({ type : 'text', class : 'wow animated fadeInUp', name : 'title', placeholder : 'Title' });   
-        const rss = $('<input>').attr({ type : 'text', class : 'wow animated fadeInUp', name : 'rss', placeholder : 'RSS' });  
-        const website = $('<input>').attr({ type : 'text', class : 'wow animated fadeInUp', name : 'site', placeholder : 'Website' });        
-           
-        const button = $('<button>').attr({ class : 'ui inverted blue button', type : 'submit' }).text('Add');;
-
-        field_name.append(name);  
-        field_title.append(title);              
-        field_website.append(website);
-        field_rss.append(rss);
-        
-        form.append(field_name);
-        form.append(field_title);
-        form.append(field_website);
-        form.append(field_rss);
-        
-        form.append(button);
-        segment.append(form);
-
-        this.addPodcast.append(segment);
-    }
-
-    LoadPlayer() {
-        const players = Array.from(document.querySelectorAll('.js-player')).map(player => new Plyr(player));
+            $lastPodcast.find('.last-podcast-item').append($label);
+            this.lastPodcast.prepend($lastPodcast);
+        } else{
+            this.lastPodcast.append($lastPodcast);
+        }
     }
 }
 
