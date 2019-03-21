@@ -9,10 +9,10 @@ class Loader{
         this.players = [];
 
         this.template = new Tamplate();
-        this.GetPodcast();
+        this.getPodcast();
     }
 
-    GetPodcast(){
+    getPodcast(){
         var url = this.url + 'all_podcast';
         fetch(url)
             .then(response => {
@@ -21,12 +21,12 @@ class Loader{
             .then(allPodcasts => {
                 this.allPodcasts = allPodcasts;
                 this.allPodcasts.forEach(podcast => {
-                    this.template.CreatePodcastList(podcast);                    
+                    this.template.createPodcastList(podcast);                    
                 });
             })
             .then(() => {
-                return this.allPodcasts.forEach(podcast => {
-                    this.GetLastPodcast(podcast);      
+                this.allPodcasts.forEach(podcast => {
+                    this.getLastPodcast(podcast);      
                 });
             })
             .catch((error) => {
@@ -34,24 +34,24 @@ class Loader{
             });
     }
 
-    GetLastPodcast(podcast){
+    getLastPodcast(podcast){
         var url = this.url + 'get_last_podcast/' + podcast.id;
         fetch(url)
             .then(response => {
                 return response.json();
             })
             .then(json => {
-                return this.template.CreateLastPodcast(json[0], podcast.cover);  
+                this.template.createLastPodcast(json[0], podcast.cover);  
             })
             .then(() => {
-                this.LoadPlayer();
+                this.loadPlayer();
             })
             .catch((error) => {
                 console.log('Error: ' + error);
             });                
     }
 
-    LoadPlayer() {
+    loadPlayer() {
         this.players = Array.from(document.querySelectorAll('.js-player')).map(player => new Plyr(player));
 
         this.players.forEach(player => {
@@ -71,13 +71,13 @@ class Loader{
                     $label.css('animation-fill-mode', 'both');
   
                     const episodeId = $lastPodcastItem.attr('data-id');
-                    this.CheckListenFlag(episodeId);
+                    this.checkListenFlag(episodeId);
                 }
             });
         });
     }
 
-    CheckListenFlag(episodeId){
+    checkListenFlag(episodeId){
         var url = this.url + 'check_listen_flag/' + episodeId;
         const formData = new FormData();
         formData.append('id', episodeId);

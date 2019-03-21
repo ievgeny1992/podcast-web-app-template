@@ -5,15 +5,15 @@ const config = require('./config.json');
 const url = config.host;
 
 class App {
-    InitLoader() {
+    initLoader() {
         this.loader = new Loader(url);
     }
 
-    Init() {
-        this.InitLoader();
+    init() {
+        this.initLoader();
         new WOW().init();
     }
 }
 
 const app = new App();
-app.Init();
+app.init();
