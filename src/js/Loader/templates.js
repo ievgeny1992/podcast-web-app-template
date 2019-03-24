@@ -1,11 +1,14 @@
 const $ = require("jquery");
+const moment = require('moment');
+moment.locale('ru');
 
 class Tamplate{
 
     constructor(){
         this.podcastList = $('.js-podcast-list');
         this.lastPodcast = $('.js-last-podcast');
-        this.$notificationBlock = $('.notifications');
+        this.calendar = $('.js-calendar');
+        this.$notificationBlock = $('.js-notifications');
 
         this.notificationDelay = 2000;
     }
@@ -44,7 +47,7 @@ class Tamplate{
         `);
     }
 
-    createLastPodcast(lastPodcast, cover){
+    createLastPodcast(lastPodcast){
         var date = new Date(lastPodcast.published); 
         date = date.toLocaleString("ru", {day: '2-digit', month: '2-digit', year: '2-digit'});
 
@@ -57,7 +60,7 @@ class Tamplate{
                     <div class="row middle-xs">
                         <div class="col-xs-4 col-sm-3">
                             <div class="last-podcast-item__logo-wrap">
-                                <img src="${cover}" class="last-podcast-item__logo" alt="${lastPodcast.title}">
+                                <img src="${lastPodcast.cover}" class="last-podcast-item__logo" alt="${lastPodcast.title}">
                             </div>
                         </div>
                         <div class="col-xs-7 col-sm-9">
@@ -91,23 +94,23 @@ class Tamplate{
                 </div>
             `;
 
-            this.createNotifications(lastPodcast, cover);
+            this.createNotifications(lastPodcast);
 
             $lastPodcast.find('.last-podcast-item').append($label);
             this.lastPodcast.prepend($lastPodcast);
-        } else{
+        } else {
             this.lastPodcast.append($lastPodcast);
         }
     }
 
-    createNotifications(podcast, cover){
-        var date = new Date(podcast.published); 
-        date = date.toLocaleString("ru", {day: '2-digit', month: '2-digit', year: '2-digit'});
+    createNotifications(podcast){
+        const publishedDate = new Date(podcast.published);
+        const date = moment(publishedDate, "YYYYMMDD").fromNow();
 
         const notification = $(`
             <div class="notification animated slideInRight">
                 <div class="notification__marker wow animated rubberBand" data-wow-delay="0.8s"></div>
-                <img src="${cover}" class="notification__logo" alt="${podcast.title}">
+                <img src="${podcast.cover}" class="notification__logo" alt="${podcast.title}">
                 <div class="notification__content">
                     <p class="notification__text">
                         ${podcast.title}
@@ -126,8 +129,149 @@ class Tamplate{
     showNotifications(item){
         setTimeout(() => {
             item.css('display', 'flex').delay(3500).fadeOut(500);
+
         }, this.notificationDelay);
         this.notificationDelay += 5000;
+    }
+
+    createReleaseCalendar(podcasts){
+        var now = new Date();
+        var date = new Date(now.getFullYear(), now.getMonth());
+
+        var calender = `
+            <div class="row calendar__row">
+                <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
+                    <p class="calendar__date">
+                        MO
+                    </p>
+                </div>
+                <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
+                    <p class="calendar__date">
+                        TU
+                    </p>
+                </div>
+                <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
+                    <p class="calendar__date">
+                        WE
+                    </p>
+                </div>
+                <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
+                    <p class="calendar__date">
+                        TH
+                    </p>
+                </div>
+                <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
+                    <p class="calendar__date">
+                        FR
+                    </p>
+                </div>
+                <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
+                    <p class="calendar__date">
+                        SA
+                    </p>
+                </div>
+                <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
+                    <p class="calendar__date">
+                        SU
+                    </p>
+                </div>
+            </div>
+            <div class="row calendar__row">
+        `;
+
+        for (var i = 0; i < this.getDay(date); i++) {
+            calender += `
+                <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
+                </div>
+            `;
+        }
+
+        const currentMonth = date.getMonth();
+        var count = 0; 
+
+        while (date.getMonth() == currentMonth) {
+            var day = date.getDate();
+            var episode = '';
+
+            if (day.toString().length == 1) {
+                day = '0' + day;
+            }
+
+            podcasts.forEach(podcast => {
+                const publishedDate = new Date(podcast.published);
+            
+                if ( publishedDate.getDate() == date.getDate() ){
+                    episode +=`
+                        <div class="calendar-item">
+                            <img src="${podcast.cover}" class="calendar-item__logo" alt="${podcast.title}">
+                            <div class="calendar-item__content">
+                                <p class="calendar-item__title">
+                                    ${podcast.title}
+                                </p>  
+                            </div>
+                        </div>
+                    `;
+                    count++;
+                }
+            });
+
+            if ( episode == '' ) {
+                calender += `
+                    <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
+                        <p class="calendar__date">
+                            ${day}
+                        </p>
+                        ${episode}
+                    </div>
+                `;
+            } else {
+                calender += `
+                    <div class="col-md col-sm-12 col-xs-12 calendar__cell">
+                        <p class="calendar__date">
+                            ${day}
+                        </p>
+                        ${episode}
+                    </div>
+                `;
+            }
+
+            if (this.getDay(date) % 7 == 6) { // вс, последний день - перевод строки
+                calender += '</div><div class="row calendar__row">';
+            }
+    
+            date.setDate(date.getDate() + 1);
+        }
+
+        // добить таблицу пустыми ячейками, если нужно
+        if (this.getDay(date) != 0) {
+            for (var i = this.getDay(date); i < 7; i++) {
+                calender += `
+                    <div class="col-md col-sm-12 col-xs-12 calendar__cell">
+                    </div>
+                `;
+            }
+        }
+
+        // закрыть таблицу
+        calender += '</div>';
+
+        calender += `
+            <div class="row end-xs">
+                <div class="col-xs-12">
+                    <p class="calendar__text">
+                        <span class="calendar__text_highlight">${count}</span> ep. released
+                    </p>
+                </div>
+            </div>
+        `;
+
+        this.calendar.append(calender);
+    }
+
+    getDay(date) {
+        var day = date.getDay();
+        if (day == 0) day = 7;
+        return day - 1;
     }
 }
 

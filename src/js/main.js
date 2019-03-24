@@ -7,6 +7,7 @@ const url = config.host;
 class App {
     initLoader() {
         this.loader = new Loader(url);
+        this.loader.init();
     }
 
     init() {

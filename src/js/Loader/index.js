@@ -9,7 +9,11 @@ class Loader{
         this.players = [];
 
         this.template = new Tamplate();
+    }
+
+    init(){
         this.getPodcast();
+        this.getEpisodesForMonth();
     }
 
     getPodcast(){
@@ -41,7 +45,7 @@ class Loader{
                 return response.json();
             })
             .then(json => {
-                this.template.createLastPodcast(json[0], podcast.cover);  
+                this.template.createLastPodcast(json[0]);  
             })
             .then(() => {
                 this.loadPlayer();
@@ -49,6 +53,20 @@ class Loader{
             .catch((error) => {
                 console.log('Error: ' + error);
             });                
+    }
+
+    getEpisodesForMonth(){
+        var url = this.url + 'get_episode_in_month';
+        fetch(url)
+            .then(response => {
+                return response.json();
+            })
+            .then(json => {
+                this.template.createReleaseCalendar(json);
+            })
+            .catch((error) => {
+                console.log('Error: ' + error);
+            });
     }
 
     loadPlayer() {
