@@ -14,7 +14,8 @@
 @bg-color: #151720;
 @block-color: #282b35;
 @highlight-color_secondary: #009cff;
-@highlight-color_primary: #e46a68;
+// @highlight-color_primary: #e46a68;
+@highlight-color_primary: #fe1453;
 @border-radius: 15px;
 @box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 @notification-box-shadow: 0 2px 38px -12px rgba(0, 0, 0, 0.56), 0 -2px 25px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
@@ -638,6 +639,15 @@ body{
 
         &_highlight{
             color: @highlight-color_primary;
+            font-size: 23px;
+
+            @media @tablet {
+                font-size: 24px;
+            }
+        
+            @media @desktop {
+                font-size: 27px;
+            }
         }
     }
 
@@ -673,7 +683,7 @@ body{
             color: @text-color;
             display: -webkit-box;
             overflow: hidden;
-            -webkit-line-clamp: 2;
+            -webkit-line-clamp: 5;
             -webkit-box-orient: vertical; 
             margin: 0px;
 

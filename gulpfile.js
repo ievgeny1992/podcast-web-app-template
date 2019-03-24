@@ -3,11 +3,13 @@ const less = require('gulp-less');
 const browserSync = require('browser-sync');
 const autoprefixer = require('gulp-autoprefixer');
 const cleanCSS = require('gulp-clean-css');
-const rename = require('gulp-rename');
 const ejs = require('gulp-ejs');
 const gutil = require('gulp-util');
-const webpack = require('webpack-stream');
 const htmlmin = require('gulp-htmlmin');
+const rename = require('gulp-rename');
+const uglify = require('gulp-uglify');
+const webpack = require('webpack');
+const webpackStream = require('webpack-stream');
 
 browserSync.create();
 
@@ -40,14 +42,37 @@ gulp.task('font', () => {
         .pipe(gulp.dest('./dist/font'));
 });
 
-gulp.task('js', () => {
-    gulp.src('src/js/main.js')
-        .pipe(webpack({
-            output: {
-                filename: 'js/main.js',
-            },
-        }))
-        .pipe(gulp.dest('dist/'));
+// gulp.task('js', () => {
+//     gulp.src('src/js/main.js')
+//         .pipe(webpack({
+//             output: {
+//                 filename: 'js/main.js',
+//             },
+//         }))
+//         .pipe(gulp.dest('dist/'));
+// });
+
+gulp.task('js', function () {
+    return gulp.src('src/js/main.js')
+    .pipe(webpackStream({
+        output: {
+        filename: 'js/main.js',
+    },
+    module: {
+        rules: [{
+                test: /\.(js)$/,
+                exclude: /(node_modules)/,
+                loader: 'babel-loader',
+                options: {
+                    presets: ['@babel/preset-env']
+                }
+        }]
+    }
+    }))
+    .pipe(gulp.dest('./dist/'))
+    .pipe(uglify())
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('html', () => {
