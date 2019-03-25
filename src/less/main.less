@@ -48,7 +48,7 @@ body{
 .podcast-app{
     &__title{
         font-family: @header-font;
-        font-weight: 700;
+        font-weight: 800;
         color: @text-color;
         font-size: 26px;
         margin: 35px 0px;
@@ -658,13 +658,14 @@ body{
         padding: 5px 0px;
 
         &__logo{
-            width: 40px;
-            height: 40px;
+            display: block;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
 
             @media @desktop {
-                width: 22px;
-                height: 22px;
+                width: 20px;
+                height: 20px;
             }
         }
 
@@ -683,12 +684,12 @@ body{
             color: @text-color;
             display: -webkit-box;
             overflow: hidden;
-            -webkit-line-clamp: 5;
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical; 
             margin: 0px;
 
             @media @desktop {
-                font-size: 13px;
+                font-size: 12px;
                 -webkit-line-clamp: 1;
                 -webkit-box-orient: vertical; 
             }

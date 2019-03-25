@@ -29,6 +29,7 @@ gulp.task('styles', () => {
             console.log(`${details.name}: ${details.stats.originalSize}`);
             console.log(`${details.name}: ${details.stats.minifiedSize}`);
         }))
+        .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('./dist/css'));
 });
 
@@ -41,16 +42,6 @@ gulp.task('font', () => {
     gulp.src('src/font/**/*.*')
         .pipe(gulp.dest('./dist/font'));
 });
-
-// gulp.task('js', () => {
-//     gulp.src('src/js/main.js')
-//         .pipe(webpack({
-//             output: {
-//                 filename: 'js/main.js',
-//             },
-//         }))
-//         .pipe(gulp.dest('dist/'));
-// });
 
 gulp.task('js', function () {
     return gulp.src('src/js/main.js')
