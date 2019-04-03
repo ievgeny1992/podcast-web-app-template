@@ -12,9 +12,10 @@ class App {
 
     init() {
         this.initLoader();
-        new WOW().init();
     }
 }
+
+new WOW().init();
 
 const app = new App();
 app.init();

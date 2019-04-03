@@ -29,6 +29,10 @@ class Loader{
                 });
             })
             .then(() => {
+                this.createHandlerDeletePodcast();
+            })
+            .then(() => {
+                this.deletePodcast();
                 this.allPodcasts.forEach(podcast => {
                     this.getLastPodcast(podcast);      
                 });
@@ -45,7 +49,7 @@ class Loader{
                 return response.json();
             })
             .then(json => {
-                this.template.createLastPodcast(json[0]);  
+                this.template.createLastPodcast(json[0]);
             })
             .then(() => {
                 this.loadPlayer();
@@ -110,6 +114,16 @@ class Loader{
         .catch((error) => {
             console.log('Error: ' + error);
         });  
+    }
+
+    createHandlerDeletePodcast(){
+        $('.user-podcast-item__wrap').on('click','.user-podcast-item__close', (self) => { 
+            this.deletePodcast(self.delegateTarget);
+        }); 
+    }
+
+    deletePodcast(target){
+        $(target).fadeOut();
     }
 }
 

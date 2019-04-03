@@ -17,18 +17,17 @@ class Tamplate{
         this.podcastList.append(`
             <div class="col-xs-12 col-sm-6 col-md-4 user-podcast-item__wrap">
                 <div class="user-podcast-item">
-                    <div class="row middle-xs">
-                        <div class="col-xs-4 col-sm-3">
-                            <div class="user-podcast-item__logo-wrap">
-                                <img src="${podcast.cover}" class="user-podcast-item__logo" alt="${podcast.title}">
-                            </div>
+                    <button type="button" class="user-podcast-item__close">
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 24 24"><path d="M13 12l5-5-1-1-5 5-5-5-1 1 5 5-5 5 1 1 5-5 5 5 1-1z"></path></svg>
+                    </button>
+                    <div class="user-podcast-item__header">
+                        <div class="user-podcast-item__logo-wrap">
+                            <img src="${podcast.cover}" class="user-podcast-item__logo" alt="${podcast.title}">
                         </div>
-                        <div class="col-xs-7 col-sm-9">
-                            <div class="user-podcast-item__info">
-                                <h3 class="user-podcast-item__title">
-                                    ${podcast.title}
-                                </h3>
-                            </div>
+                        <div class="user-podcast-item__info">
+                            <h3 class="user-podcast-item__title">
+                                ${podcast.title}
+                            </h3>
                         </div>
                     </div>
                     <div class="row">
@@ -57,13 +56,11 @@ class Tamplate{
         const $lastPodcast = $(`
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <div class="last-podcast-item" data-id="${lastPodcast.id}">
-                    <div class="row middle-xs">
-                        <div class="col-xs-4 col-sm-3">
-                            <div class="last-podcast-item__logo-wrap">
-                                <img src="${lastPodcast.cover}" class="last-podcast-item__logo" alt="${lastPodcast.title}">
-                            </div>
+                    <div class="last-podcast-item__header">
+                        <div class="user-podcast-item__logo-wrap">
+                            <img src="${lastPodcast.cover}" class="last-podcast-item__logo" alt="${lastPodcast.title}">
                         </div>
-                        <div class="col-xs-7 col-sm-9">
+                        <div class="last-podcast-item__info">
                             <h3 class="last-podcast-item__title">
                                 ${lastPodcast.title}
                             </h3>
@@ -186,7 +183,9 @@ class Tamplate{
             `;
         }
 
-        const currentMonth = date.getMonth();
+        const currentMonth = now.getMonth();
+        const currentDate = now.getDate();
+
         var count = 0; 
 
         while (date.getMonth() == currentMonth) {
@@ -197,13 +196,21 @@ class Tamplate{
                 day = '0' + day;
             }
 
+            if (date.getDate() == currentDate){
+                day = `
+                    <span class="calendar__date_current">${day}</span>
+                `;
+            }
+            
             podcasts.forEach(podcast => {
                 const publishedDate = new Date(podcast.published);
             
                 if ( publishedDate.getDate() == date.getDate() ){
                     episode +=`
                         <div class="calendar-item">
-                            <img src="${podcast.cover}" class="calendar-item__logo" alt="${podcast.title}">
+                            <div class="calendar-item__logo-wrap">
+                                <img src="${podcast.cover}" class="calendar-item__logo" alt="${podcast.title}">
+                            </div>
                             <div class="calendar-item__content">
                                 <p class="calendar-item__title">
                                     ${podcast.title}
@@ -246,7 +253,7 @@ class Tamplate{
         if (this.getDay(date) != 0) {
             for (var i = this.getDay(date); i < 7; i++) {
                 calender += `
-                    <div class="col-md col-sm-12 col-xs-12 calendar__cell">
+                    <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
                     </div>
                 `;
             }
