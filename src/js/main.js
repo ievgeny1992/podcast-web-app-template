@@ -1,21 +1,23 @@
 const Loader = require('./Loader');
-const $ = require("jquery");
 const config = require('./config.json');
 
 const url = config.host;
-
-class App {
-    initLoader() {
-        this.loader = new Loader(url);
-        this.loader.init();
-    }
-
-    init() {
-        this.initLoader();
-    }
+const selectorList = {
+    allPodcastElem: 'js-podcast-list',
+    lastEpisodeElem: 'js-last-podcast',
+    calendarElem: 'js-calendar',
 }
 
-new WOW().init();
+class App {
+    init() {
+        this.loader = new Loader(url, selectorList);
+        new WOW().init();
+
+        const $body = $('body');
+        $body.trigger('show-all-podcasts');
+        $body.trigger('show-calendar');
+    }
+}
 
 const app = new App();
 app.init();

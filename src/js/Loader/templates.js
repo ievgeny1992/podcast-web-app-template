@@ -1,10 +1,9 @@
-const $ = require("jquery");
 const moment = require('moment');
 moment.locale('ru');
 
-class Tamplate{
+class Tamplate {
 
-    constructor(){
+    constructor() {
         this.podcastList = $('.js-podcast-list');
         this.lastPodcast = $('.js-last-podcast');
         this.calendar = $('.js-calendar');
@@ -13,8 +12,8 @@ class Tamplate{
         this.notificationDelay = 2000;
     }
 
-    createPodcastList(podcast){
-        this.podcastList.append(`
+    getPodcastList(podcast) {
+        const $podcast = `
             <div class="col-xs-12 col-sm-6 col-md-4 user-podcast-item__wrap">
                 <div class="user-podcast-item">
                     <button type="button" class="user-podcast-item__close">
@@ -43,12 +42,14 @@ class Tamplate{
                     </div>
                 </div>
             </div>
-        `);
+        `;
+
+        return $podcast;
     }
 
-    createLastPodcast(lastPodcast){
-        var date = new Date(lastPodcast.published); 
-        date = date.toLocaleString("ru", {day: '2-digit', month: '2-digit', year: '2-digit'});
+    createLastPodcast(lastPodcast) {
+        var date = new Date(lastPodcast.published);
+        date = date.toLocaleString("ru", { day: '2-digit', month: '2-digit', year: '2-digit' });
 
         var content = $.parseHTML(lastPodcast.content);
         content = $(content).text();
@@ -84,7 +85,7 @@ class Tamplate{
             </div>
         `);
 
-        if( !lastPodcast.listen_flag ){
+        if (!lastPodcast.listen_flag) {
             const $label = `
                 <div class="last-podcast-item__new-label wow animated rubberBand" data-wow-delay="0.4s">
                     New
@@ -94,13 +95,12 @@ class Tamplate{
             this.createNotifications(lastPodcast);
 
             $lastPodcast.find('.last-podcast-item').append($label);
-            this.lastPodcast.prepend($lastPodcast);
-        } else {
-            this.lastPodcast.append($lastPodcast);
         }
+
+        return $lastPodcast;
     }
 
-    createNotifications(podcast){
+    createNotifications(podcast) {
         const publishedDate = new Date(podcast.published);
         const date = moment(publishedDate, "YYYYMMDD").fromNow();
 
@@ -123,7 +123,7 @@ class Tamplate{
         this.showNotifications(notification);
     }
 
-    showNotifications(item){
+    showNotifications(item) {
         setTimeout(() => {
             item.css('display', 'flex').delay(3500).fadeOut(500);
 
@@ -131,11 +131,11 @@ class Tamplate{
         this.notificationDelay += 5000;
     }
 
-    createReleaseCalendar(podcasts){
+    getReleaseCalendar(podcasts) {
         var now = new Date();
         var date = new Date(now.getFullYear(), now.getMonth());
 
-        var calender = `
+        var calendar = `
             <div class="row calendar__row">
                 <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
                     <p class="calendar__date">
@@ -177,7 +177,7 @@ class Tamplate{
         `;
 
         for (var i = 0; i < this.getDay(date); i++) {
-            calender += `
+            calendar += `
                 <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
                 </div>
             `;
@@ -186,7 +186,7 @@ class Tamplate{
         const currentMonth = now.getMonth();
         const currentDate = now.getDate();
 
-        var count = 0; 
+        var count = 0;
 
         while (date.getMonth() == currentMonth) {
             var day = date.getDate();
@@ -196,17 +196,17 @@ class Tamplate{
                 day = '0' + day;
             }
 
-            if (date.getDate() == currentDate){
+            if (date.getDate() == currentDate) {
                 day = `
                     <span class="calendar__date_current">${day}</span>
                 `;
             }
-            
+
             podcasts.forEach(podcast => {
                 const publishedDate = new Date(podcast.published);
-            
-                if ( publishedDate.getDate() == date.getDate() ){
-                    episode +=`
+
+                if (publishedDate.getDate() == date.getDate()) {
+                    episode += `
                         <div class="calendar-item">
                             <div class="calendar-item__logo-wrap">
                                 <img src="${podcast.cover}" class="calendar-item__logo" alt="${podcast.title}">
@@ -222,8 +222,8 @@ class Tamplate{
                 }
             });
 
-            if ( episode == '' ) {
-                calender += `
+            if (episode == '') {
+                calendar += `
                     <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
                         <p class="calendar__date">
                             ${day}
@@ -232,7 +232,7 @@ class Tamplate{
                     </div>
                 `;
             } else {
-                calender += `
+                calendar += `
                     <div class="col-md col-sm-12 col-xs-12 calendar__cell">
                         <p class="calendar__date">
                             ${day}
@@ -242,17 +242,18 @@ class Tamplate{
                 `;
             }
 
-            if (this.getDay(date) % 7 == 6) { // вс, последний день - перевод строки
-                calender += '</div><div class="row calendar__row">';
+            // вс, последний день - перевод строки
+            if (this.getDay(date) % 7 == 6) {
+                calendar += '</div><div class="row calendar__row">';
             }
-    
+
             date.setDate(date.getDate() + 1);
         }
 
         // добить таблицу пустыми ячейками, если нужно
         if (this.getDay(date) != 0) {
             for (var i = this.getDay(date); i < 7; i++) {
-                calender += `
+                calendar += `
                     <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
                     </div>
                 `;
@@ -260,9 +261,9 @@ class Tamplate{
         }
 
         // закрыть таблицу
-        calender += '</div>';
+        calendar += '</div>';
 
-        calender += `
+        calendar += `
             <div class="row end-xs">
                 <div class="col-xs-12">
                     <p class="calendar__text">
@@ -271,8 +272,8 @@ class Tamplate{
                 </div>
             </div>
         `;
-
-        this.calendar.append(calender);
+        
+        return calendar;
     }
 
     getDay(date) {

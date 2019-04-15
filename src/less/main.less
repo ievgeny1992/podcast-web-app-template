@@ -4,18 +4,42 @@
 @import 'media';
 @import 'fontello';
 
+@font-face {
+    font-family: 'Basis Grotesque Pro';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Basis Grotesque Pro'), url('../font/BasisGrotesquePro-Regular.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Basis Grotesque Pro Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Basis Grotesque Pro Bold'), url('../font/BasisGrotesquePro-Bold.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Basis Grotesque Pro Light';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Basis Grotesque Pro Light'), url('../font/BasisGrotesquePro-Light.woff') format('woff');
+}
+
 /* Fonts */
+// @header-font: 'Basis Grotesque Pro Light', sans-serif;
+@text-font: 'Basis Grotesque Pro Light', sans-serif;
+
 @header-font: 'Montserrat', sans-serif;
-@text-font: 'Roboto', sans-serif;
+// @text-font: 'Roboto', sans-serif;
 /* Fonts */
 
 /* Colors */
 @text-color: #dedee0;
 @bg-color: #151720;
 @block-color: #282b35;
-@highlight-color_secondary: #009cff;
-// @highlight-color_primary: #e46a68;
-@highlight-color_primary: #fe1453;
+@highlight-color: #fe1453;
 @border-radius: 15px;
 @box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 @notification-box-shadow: 0 2px 38px -12px rgba(0, 0, 0, 0.56), 0 -2px 25px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
@@ -48,10 +72,10 @@ body{
 .podcast-app{
     &__title{
         font-family: @header-font;
-        font-weight: 800;
+        font-weight: 700;
         color: @text-color;
-        font-size: 26px;
-        margin: 35px 0px;
+        font-size: 24px;
+        margin: 25px 0px;
     
         @media @tablet {
             font-size: 29px;
@@ -64,13 +88,18 @@ body{
 
         &:after {
             content: '.';
-            color: @highlight-color_primary;
+            color: @highlight-color;
         }
     }
 }
 
 
 /* Plyr */
+.plyr{
+    font-family: @text-font;
+    font-weight: 700;
+}
+
 .plyr--audio .plyr__controls{
     background-color: transparent;
     border-radius: @border-radius;
@@ -87,7 +116,7 @@ body{
 }
 
 .plyr--full-ui input[type=range]{
-    color: @highlight-color_primary;
+    color: @highlight-color;
 }
 /* Plyr */
 
@@ -112,7 +141,7 @@ body{
         font-family: @header-font;
         font-weight: 700;
         color: @text-color;
-        font-size: 16px;
+        font-size: 15px;
     
         @media @tablet {
             font-size: 18px;
@@ -167,8 +196,8 @@ body{
 
     &__name{
         display: none;
-        font-family: @header-font;
-        font-weight: 500;
+        font-family: @text-font;
+        font-weight: 700;
         color: @text-color;
     
         @media @tablet {
@@ -183,6 +212,46 @@ body{
     
 }
 /* avatar */
+
+/* information */
+
+.information{
+    &__wrap{
+        padding-top: 25px;
+        padding-bottom: 0px;
+        @media @tablet {
+            padding-top: 40px;
+            padding-bottom: 10px;
+        }
+    
+        @media @desktop {
+            padding-top: 50px;
+            padding-bottom: 10px;
+        } 
+    }
+
+    &__text{
+        font-family: @header-font;
+        font-size: 20px;
+        font-weight: 300;
+        color: @text-color;
+        margin: 0px;
+
+        @media @tablet {
+
+        }
+    
+        @media @desktop {
+
+        }
+    }
+
+    &__quantity{
+        font-weight: 500;
+    }
+}
+
+/* information */
 
 /* user-podcast */
 .user-podcast{
@@ -235,7 +304,7 @@ body{
             background-color: transparent;
             width: 28px;
             height: 28px;
-            border: 1px solid @highlight-color_primary;
+            border: 1px solid @highlight-color;
             border-radius: 50%;
             padding: 4px;
             cursor: pointer;
@@ -249,11 +318,12 @@ body{
                 height: 100%;
                 overflow: visible;
                 position: relative;
-                fill: @highlight-color_primary;
+                fill: @highlight-color;
             }
         }
 
         &__wrap{
+            outline: none;
             margin-bottom: 15px;
         }
 
@@ -266,7 +336,7 @@ body{
             font-weight: 700;
             color: @text-color;
             margin: 0px;
-            font-size: 16px;
+            font-size: 17px;
         
             @media @tablet {
                 font-size: 18px;
@@ -298,23 +368,23 @@ body{
 
         &__link{
             display: block;
-            font-family: @header-font;
-            font-weight: 500;
+            font-family: @text-font;
+            font-weight: 700;
             text-decoration: none;
             color: #6B7282;
-            font-size: 12px;
+            font-size: 13px;
         }
 
         &__logo{
             align-self: center;
-            width: 80px;
-            height: 80px;
+            width: 67px;
+            height: 67px;
             border-radius: 50%;
             box-shadow: @box-shadow;
 
             @media @desktop {
-                width: 82px;
-                height: 82px;
+                width: 80px;
+                height: 80px;
             }
         }
 
@@ -375,7 +445,7 @@ body{
             font-weight: 700;
             color: @text-color;
             margin: 0px;
-            font-size: 16px;
+            font-size: 17px;
 
             @media @tablet {
                 font-size: 18px;
@@ -388,8 +458,8 @@ body{
         }
 
         &__date{
-            font-family: @header-font;
-            font-weight: 500;
+            font-family: @text-font;
+            font-weight: 700;
             color: #6b7282;
             line-height: 15px;
             margin: 5px 0px;
@@ -406,8 +476,8 @@ body{
 
         &__new-label{
             position: absolute;
-            right: 10px;
-            top: 10px;
+            right: 6px;
+            top: 4px;
             border: 2px solid #21ba45;
             border-radius: 6px;
             padding: 2px 10px;
@@ -415,9 +485,12 @@ body{
             font-weight: 600;
             font-size: 11px;
             font-family: @text-font;
+            font-weight: 700;
         
             @media @tablet {
                 font-size: 12px;
+                right: 10px;
+                top: 10px;
             }
         }
 
@@ -427,23 +500,23 @@ body{
             font-weight: 500;
             text-decoration: none;
             color: #6B7282;
-            font-size: 10px;
+            font-size: 11px;
         
             @media @desktop {
-                font-size: 12px;
+                font-size: 13px;
             }
         }
 
         &__logo{
             align-self: center;
-            width: 80px;
-            height: 80px;
+            width: 67px;
+            height: 67px;
             border-radius: 50%;
             box-shadow: @box-shadow;
 
             @media @desktop {
-                width: 82px;
-                height: 82px;
+                width: 80px;
+                height: 80px;
             }
         }
 
@@ -620,7 +693,8 @@ body{
     }
 
     &__date{
-        font-family: @header-font;
+        font-family: @text-font;
+        font-weight: 700;
         font-size: 12px;
         color: #6b7282;
         font-weight: 500px;
@@ -690,19 +764,14 @@ body{
         text-align: right;
 
         &_current{
-            color: @highlight-color_primary;
+            color: @highlight-color;
         }
-
-        // &:before{
-        //     content: '.';
-        //     color: @highlight-color_primary;
-        // }
     }
 
     &__text{
         font-family: @header-font;
         font-weight: 700;
-        font-size: 20px;
+        font-size: 18px;
         color: @text-color;
 
         @media @tablet {
@@ -714,8 +783,8 @@ body{
         }
 
         &_highlight{
-            color: @highlight-color_primary;
-            font-size: 23px;
+            color: @highlight-color;
+            font-size: 20px;
 
             @media @tablet {
                 font-size: 24px;
@@ -736,8 +805,8 @@ body{
         &__logo{
             display: block;
             align-self: center;
-            width: 36px;
-            height: 36px;
+            width: 25px;
+            height: 25px;
             border-radius: 50%;
 
             @media @desktop {
@@ -755,9 +824,9 @@ body{
         }
 
         &__title{
-            font-family: @header-font;
-            font-size: 15px;
-            font-weight: 500;
+            font-family: @text-font;
+            font-size: 14px;
+            font-weight: 700;
             color: @text-color;
             display: -webkit-box;
             overflow: hidden;
@@ -766,7 +835,7 @@ body{
             margin: 0px;
 
             @media @desktop {
-                font-size: 12px;
+                font-size: 13px;
                 -webkit-line-clamp: 1;
                 -webkit-box-orient: vertical; 
             }
