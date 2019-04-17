@@ -1,7 +1,5 @@
-const Loader = require('./Loader');
-const config = require('./config.json');
+const Loader = require('./loader');
 
-const url = config.host;
 const selectorList = {
     allPodcastElem: 'js-podcast-list',
     lastEpisodeElem: 'js-last-podcast',
@@ -10,12 +8,13 @@ const selectorList = {
 
 class App {
     init() {
-        this.loader = new Loader(url, selectorList);
+        this.loader = new Loader(selectorList);
         new WOW().init();
 
         const $body = $('body');
         $body.trigger('show-all-podcasts');
         $body.trigger('show-calendar');
+        // $body.trigger('show-calendar', { month: 3, year: 2019 });
     }
 }
 

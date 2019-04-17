@@ -61,7 +61,7 @@ gulp.task('js', function () {
     }
     }))
     .pipe(gulp.dest('./dist/'))
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(rename({ suffix: '.min' }))
     .pipe(gulp.dest('./dist/'));
 });

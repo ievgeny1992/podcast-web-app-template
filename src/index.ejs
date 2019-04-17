@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" type="text/css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" type="text/css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/plyr/3.5.2/plyr.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" href="css/main.min.css?v=<%= timestamp %>" type="text/css">
     <!--CSS-->
 </head>
@@ -91,6 +92,14 @@
                     </h2>
                 </div>
             </div>
+
+            <button data-month="1" data-year="0" class="calendar__button js-create-calndar-prev">
+                <i class="icon-left-open"></i>
+            </button>
+            <button data-month="1" data-year="0" class="calendar__button js-create-calndar-next">
+                <i class="icon-right-open"></i>
+            </button>
+
             <div class="js-calendar">
 
             </div>
@@ -147,6 +156,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/plyr/3.5.2/plyr.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="js/main.min.js?v=<%= timestamp %>"></script>
     <!--JavaScript-->
 
