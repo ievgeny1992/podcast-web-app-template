@@ -1,12 +1,68 @@
 const moment = require('moment');
-moment.locale('ru');
 
 class Tamplate{
     constructor() {
+        moment.locale('ru');
 
+        this.currentDate = null;
     }
 
-    getReleaseCalendar(podcasts, targetDate) {
+    getReleaseCalendarWrap(){
+        const $calendarWrap = $('<div>').attr({ class: 'calendar-body__wrap js-calendar-slider' });
+        return $calendarWrap;
+    }
+
+    getReleaseCalendarHeader(){
+        const $row = $('<div>').attr({ class: 'row middle-xs' });
+        const buttons = `
+            <div class="col-xs-6">
+                <button data-month="1" data-year="0" class="calendar__button js-create-calndar-prev">
+                    <i class="icon-left-open"></i>
+                </button>
+                <button data-month="1" data-year="0" class="calendar__button js-create-calndar-next">
+                    <i class="icon-right-open"></i>
+                </button>
+            </div>
+        `;
+
+        const $currentDateWrap = $('<div>').attr({ class: 'col-xs-6' });
+        this.currentDate = this.getReleaseCalendarCurrentDate();
+
+        $currentDateWrap.append(this.currentDate);
+
+        $row.append(buttons);
+        $row.append($currentDateWrap);
+
+        return $row;
+    }
+
+    getReleaseCalendarCurrentDate(){
+        const currentDate = $('<p>').attr({ class: 'js-current-date calendar__current-date' });
+        return currentDate;
+    }
+
+    setReleaseCalendarCurrentDate(month, year){
+        const date = new Date(year, month - 1);
+        const monthName = moment(date).format('MMMM');     
+        this.currentDate.text(monthName + ' ' + year);
+    }
+
+    getReleaseCalendarWeekDays(){
+        const weekDaysName = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
+        const $calendarRow = $('<div>').attr({ class: 'row calendar__row calendar__days' });
+
+        weekDaysName.forEach(day => {
+            const $calendarDate = $('<p>').attr({ class: 'calendar__date' }).text(day);
+            const $calendarCell = $('<div>').attr({ class: 'col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_days calendar__cell_empty' });
+
+            $calendarCell.append($calendarDate);
+            $calendarRow.append($calendarCell);
+        });
+        
+        return $calendarRow;
+    }
+
+    getReleaseCalendarBody(podcasts, targetDate) {
         const now = new Date();
 
         if( !targetDate ){
@@ -18,49 +74,8 @@ class Tamplate{
         } else {
             var date = new Date(targetDate.year, targetDate.month - 1);
         }
-        
-        // console.log('Текущее время: ' + now + ';   сгенертрованое время: ' + date);
 
-        var calendar = `
-            <div class="row calendar__row">
-                <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
-                    <p class="calendar__date">
-                        MO
-                    </p>
-                </div>
-                <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
-                    <p class="calendar__date">
-                        TU
-                    </p>
-                </div>
-                <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
-                    <p class="calendar__date">
-                        WE
-                    </p>
-                </div>
-                <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
-                    <p class="calendar__date">
-                        TH
-                    </p>
-                </div>
-                <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
-                    <p class="calendar__date">
-                        FR
-                    </p>
-                </div>
-                <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
-                    <p class="calendar__date">
-                        SA
-                    </p>
-                </div>
-                <div class="col-md col-sm-12 col-xs-12 calendar__cell calendar__cell_empty">
-                    <p class="calendar__date">
-                        SU
-                    </p>
-                </div>
-            </div>
-            <div class="row calendar__row">
-        `;
+        var calendar = `<div class="row calendar__row">`;
 
         for (var i = 0; i < this.getDay(date); i++) {
             calendar += `
@@ -72,10 +87,7 @@ class Tamplate{
         const currentMonth = date.getMonth();
         const currentDate = now.getDate();
 
-        // const currentMonthName = moment().subtract(offset, 'month').format('MMMM');    
-        // console.log(currentMonthName); 
-
-        var count = 0;
+        this.setReleaseCalendarCurrentDate( targetDate.month, targetDate.year );
 
         while (date.getMonth() == currentMonth) {
             var day = date.getDate();
@@ -107,7 +119,6 @@ class Tamplate{
                             </div>
                         </div>
                     `;
-                    count++;
                 }
             });
 
@@ -150,19 +161,22 @@ class Tamplate{
 
         // закрыть таблицу
         calendar += '</div>';
-
+        
+        const count = podcasts.length;
         calendar += `
             <div class="row end-xs">
                 <div class="col-xs-6">
                     <p class="calendar__text">
-                        <span class="calendar__text_highlight">${count}</span> ep. released
+                        <span class="calendar__text_highlight">${count}</span> эп. вышло
                     </p>
                 </div>
             </div>
         `;
-        var $calendarWrap = $('<div>');
-        $calendarWrap.append(calendar);
-        return $calendarWrap;
+
+        const $calendarSlide = $('<div>');
+        $calendarSlide.append(calendar);
+
+        return $calendarSlide;
     }
 
     getDay(date) {

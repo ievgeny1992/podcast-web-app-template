@@ -3,26 +3,40 @@ const Tamplate = require('./templates.js');
 class ReleaseCalendar{
     constructor(url){
         this.url = url;
-        this.calendar = $('.js-calendar');
+        this.calendarBlock = $('.js-calendar');
 
         this.month = null;
         this.year = null;
 
+        this.template = new Tamplate();
         this.initHandlers();
-        this.initSlider();
     }
 
     initHandlers(){
         const $body = $('body');
         $body.on('show-calendar', (self, targetDate) => {
+            const $calendarHeader = this.template.getReleaseCalendarHeader();
+            const $calendarWeekDays = this.template.getReleaseCalendarWeekDays();
+            const $calendarSliderWrap = this.template.getReleaseCalendarWrap();
+
+            this.calendarBlock.append($calendarHeader);
+            this.calendarBlock.append($calendarWeekDays);
+            this.calendarBlock.append($calendarSliderWrap);
+            
+            this.calendarSlider = $calendarSliderWrap;
+            this.initSlider();
+
+            this.craeteCalendarButtonHandler();
             this.getEpisodesForMonth(targetDate);
         });
 
-        this.craeteCalendarButtonHandler();
+        $body.on('show-new-slide', (self, targetDate) => {
+            this.getEpisodesForMonth(targetDate);
+        });
     }
 
     initSlider(){
-        this.calendar.slick({
+        this.calendarSlider.slick({
             slidesToShow: 1,
             slidesToScroll: 1,
             infinite: false,
@@ -42,24 +56,24 @@ class ReleaseCalendar{
             targetDate.year = now.getFullYear();
         }
         var url = this.url + 'get_episode_in_month/' + targetDate.month + '&' + targetDate.year;
-        this.template = new Tamplate();
         
         fetch(url)
             .then(response => {
                 return response.json();
             })
             .then(json => {
-                this.createReleaseCalendar(json, targetDate);
+                this.createReleaseCalendarBody(json, targetDate);
             })
             .catch((error) => {
                 console.log('Error: ' + error);
             });
     }
 
-    createReleaseCalendar(podcasts, targetDate){
-        var calendar = this.template.getReleaseCalendar(podcasts, targetDate);
-        this.calendar.slick('slickAdd', calendar);
-        this.calendar.slick('slickNext');
+    createReleaseCalendarBody(podcasts, targetDate){
+        const calendar = this.template.getReleaseCalendarBody(podcasts, targetDate);
+
+        this.calendarSlider.slick('slickAdd', calendar);
+        this.calendarSlider.slick('slickNext');
     }
 
     craeteCalendarButtonHandler(){
@@ -78,13 +92,13 @@ class ReleaseCalendar{
                 this.year--;
             }
 
-            $('body').trigger('show-calendar', { month: this.month, year: this.year });
+            $('body').trigger('show-new-slide', { month: this.month, year: this.year });
         });
 
         $('.js-create-calndar-next').on('click', () => {
-            this.calendar.slick('slickPrev');
+            this.calendarSlider.slick('slickPrev');
             if (slideIndex !== 0) {
-                this.calendar.slick('slickRemove',slideIndex);
+                this.calendarSlider.slick('slickRemove',slideIndex);
                 slideIndex--;
 
                 this.month++;
@@ -92,6 +106,8 @@ class ReleaseCalendar{
                     this.month = 1;
                     this.year++;
                 }
+
+                this.template.setReleaseCalendarCurrentDate(this.month, this.year);
             }
         });
     }

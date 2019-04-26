@@ -28,9 +28,7 @@
 }
 
 /* Fonts */
-// @header-font: 'Basis Grotesque Pro Light', sans-serif;
 @text-font: 'Basis Grotesque Pro Light', sans-serif;
-
 @header-font: 'Montserrat', sans-serif;
 // @text-font: 'Roboto', sans-serif;
 /* Fonts */
@@ -733,10 +731,10 @@ body{
     &__row{
         margin-right: -0.25em;
         margin-left: -0.25em;
+    }
 
-        &:first-child > .calendar__cell{
-            background-color: #1b1d24;
-        }
+    &__days{
+        margin-top: 10px;
     }
 
     &__cell{
@@ -752,6 +750,10 @@ body{
             border: 2px solid @bg-color;
         }
 
+        &_days{
+            background-color: #1b1d24;
+        }
+
         &_empty{
             display: none;
     
@@ -764,11 +766,26 @@ body{
     &__button{
         background-color: transparent;
         border: none;
-        outline: none;
-        padding: 15px 0px;
-        color: @highlight-color;
-        font-size: 22px;
+        outline: 0;
+        padding: 0px;
+        color: #fe1453;
+        font-size: 24px;
         cursor: pointer;
+        width: 40px;
+        text-align: left;
+    }
+
+    &__current-date{
+        font-family: @text-font;
+        color: @text-color;
+        font-weight: 700;
+        font-size: 14px;
+        margin: 0px;
+        text-align: right;
+
+        @media @desktop {
+            font-size: 18px;
+        }
     }
 
     &__date{
@@ -821,8 +838,8 @@ body{
         &__logo{
             display: block;
             align-self: center;
-            width: 25px;
-            height: 25px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
 
             @media @desktop {
@@ -859,3 +876,21 @@ body{
     }
 }
 /* calendar */
+
+/* chart */
+.chart{
+    &__wrap{
+        padding-top: 25px;
+        padding-bottom: 0px;
+        @media @tablet {
+            padding-top: 40px;
+            padding-bottom: 10px;
+        }
+    
+        @media @desktop {
+            padding-top: 50px;
+            padding-bottom: 10px;
+        } 
+    }
+}
+/* chart */

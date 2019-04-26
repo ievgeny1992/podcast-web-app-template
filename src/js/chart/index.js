@@ -1,0 +1,134 @@
+var Chart = require('chart.js');
+const moment = require('moment');
+
+class PodcastChart{
+    constructor(url){
+        this.url = url;
+        moment.locale('ru');
+        this.initHandlers();
+    }
+
+    initHandlers(){
+        const $body = $('body');
+        
+        $body.on('show-chart', (self) => {
+            this.setChartDefaults();
+            this.createChart();
+        });
+    }
+
+    createChart(){
+        var ctx = document.getElementById('js-chart').getContext("2d");
+        this.gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
+        this.gradientStroke.addColorStop(0, '#fe1453');
+        this.gradientStroke.addColorStop(1, '#fd643b');
+
+        this.podcastChart = new Chart(ctx, this.getChartConfig());
+        this.setChartData();
+    }
+
+    getChartConfig(){
+        const config = {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Количество эпизодов',
+                    datasets: [{ data: [] }],
+                    borderColor: this.gradientStroke,
+                    pointBorderColor: this.gradientStroke,
+                    pointBackgroundColor: this.gradientStroke,
+                    pointHoverBackgroundColor: this.gradientStroke,
+                    pointHoverBorderColor: this.gradientStroke,
+                    fill: false,
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    mode: 'x-axis',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        gridLines: {
+                            color: '#282b35'
+                        },
+                    }],
+                    yAxes: [{
+                        display: true,
+                        gridLines: {
+                            color: '#282b35'
+                        },
+                        stacked: true
+                    }]
+                }
+            }
+        };
+
+        return config;
+    }
+
+    createChartLabels(month, year){
+        var currentDate =  new Date(year, month - 1);
+        var monthName = moment(currentDate).format('MMMM YYYY');
+
+        this.podcastChart.data.labels.push(monthName);
+    }
+
+    setChartData(){
+        var date = new Date();
+        var month = date.getMonth() + 2;
+        var year = date.getFullYear() - 1;
+
+        for (var i = 0; i < 12; i++) {
+            var currentDate =  new Date(year, month);
+            this.createChartLabels(currentDate.getMonth(), currentDate.getFullYear());
+
+            var currentMonth = currentDate.getMonth();
+            var currentYear = currentDate.getFullYear();
+
+            if ( currentMonth === 0 ){
+                currentMonth = 12;
+                currentYear--;
+            }
+
+            var url = this.url + 'get_episode_in_month/' + currentMonth + '&' + currentYear;
+            this.getChartData(i, url);
+    
+            month++;
+        }
+    }
+
+    getChartData(index, url){
+        fetch(url)
+            .then(response => {
+                return response.json();
+            })
+            .then(json => {
+                const count = json.length;
+                this.podcastChart.data.datasets[0].data[index] = count;
+                this.podcastChart.update();
+            })
+            .catch((error) => {
+                console.log('Error: ' + error);
+            });
+    }
+
+    setChartDefaults(){
+        Chart.defaults.global.defaultFontFamily = 'Basis Grotesque Pro Light';
+        Chart.defaults.global.defaultFontColor = '#6b7282';
+        Chart.defaults.global.defaultFontSize = 14;
+    }
+}
+
+module.exports = PodcastChart;

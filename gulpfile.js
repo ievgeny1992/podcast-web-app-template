@@ -61,7 +61,29 @@ gulp.task('js', function () {
     }
     }))
     .pipe(gulp.dest('./dist/'))
-    // .pipe(uglify())
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('js-min', function () {
+    return gulp.src('src/js/main.js')
+    .pipe(webpackStream({
+        output: {
+        filename: 'js/main.js',
+    },
+    module: {
+        rules: [{
+                test: /\.(js)$/,
+                exclude: /(node_modules)/,
+                loader: 'babel-loader',
+                options: {
+                    presets: ['@babel/preset-env']
+                }
+        }]
+    }
+    }))
+    .pipe(gulp.dest('./dist/'))
+    .pipe(uglify())
     .pipe(rename({ suffix: '.min' }))
     .pipe(gulp.dest('./dist/'));
 });
@@ -80,3 +102,4 @@ gulp.watch('src/img/**/*.*', ['img']);
 gulp.watch('src/js/**/*.*', ['js']);
 
 gulp.task('default', ['styles','js', 'html', 'img', 'font']);
+gulp.task('build', ['styles','js-min', 'html', 'img', 'font']);

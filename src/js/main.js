@@ -14,7 +14,7 @@ class App {
         const $body = $('body');
         $body.trigger('show-all-podcasts');
         $body.trigger('show-calendar');
-        // $body.trigger('show-calendar', { month: 3, year: 2019 });
+        $body.trigger('show-chart');
     }
 }
 
