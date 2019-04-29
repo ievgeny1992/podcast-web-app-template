@@ -56,6 +56,8 @@ class LastEpisode{
                 const $lastPodcastItem = $plyrContainer.closest('.last-podcast-item');
                 const $label = $lastPodcastItem.find('.last-podcast-item__new-label');
 
+                $lastPodcastItem.append(`<div class="last-podcast-item__play-bubble"></div>`);
+
                 if ($label.length) {
                     $label.css('animation-delay', '0s');
                     $label.css('animation-name', 'bounceOut');
@@ -64,7 +66,15 @@ class LastEpisode{
                     const episodeId = $lastPodcastItem.attr('data-id');
                     this.checkListenFlag(episodeId);
                 }
-            });
+            })
+
+            player.on('pause', event => {
+                const instance = event.detail.plyr;
+                const $plyrContainer = $(instance.elements.container);
+                const $lastPodcastItem = $plyrContainer.closest('.last-podcast-item');
+                
+                $lastPodcastItem.find('.last-podcast-item__play-bubble').remove();
+            })
         });
     }
 

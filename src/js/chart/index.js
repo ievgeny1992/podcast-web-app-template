@@ -19,9 +19,12 @@ class PodcastChart{
 
     createChart(){
         var ctx = document.getElementById('js-chart').getContext("2d");
-        this.gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
-        this.gradientStroke.addColorStop(0, '#fe1453');
-        this.gradientStroke.addColorStop(1, '#fd643b');
+
+        const widthBlock = $('#js-chart').parent().width();
+
+        this.gradientStroke = ctx.createLinearGradient(0, 0, widthBlock, 0);
+        this.gradientStroke.addColorStop(0, '#fd643b');
+        this.gradientStroke.addColorStop(1, '#fe1453');
 
         this.podcastChart = new Chart(ctx, this.getChartConfig());
         this.setChartData();
