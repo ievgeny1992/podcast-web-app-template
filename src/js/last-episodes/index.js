@@ -46,7 +46,7 @@ class LastEpisode{
         const players = Plyr.setup('.js-player');
 
         players.forEach(player => {
-            player.on('playing', event => {
+            player.on('playing', (event, self) => {
                 const instance = event.detail.plyr;
 
                 // const currentTime = instance.currentTime;
@@ -76,6 +76,18 @@ class LastEpisode{
                 $lastPodcastItem.find('.last-podcast-item__play-bubble').remove();
             })
         });
+    }
+
+    createPlayBubble(event){
+        const instance = event.detail.plyr;
+        const $plyrContainer = $(instance.elements.container);
+        const $lastPodcastItem = $plyrContainer.closest('.last-podcast-item');
+
+        if ( event.type == 'playing' ) {
+            $lastPodcastItem.append( this.template.getPlayBubble() );
+        }
+
+        if ( event.type == 'pause' ) $lastPodcastItem.find('.last-podcast-item__play-bubble').remove();
     }
 
     checkListenFlag(episodeId) {

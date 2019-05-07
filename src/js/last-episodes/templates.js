@@ -47,9 +47,7 @@ class Tamplate{
 
         if (!lastPodcast.listen_flag) {
             const $label = `
-                <div class="last-podcast-item__new-label wow animated rubberBand" data-wow-delay="0.4s">
-                    New
-                </div>
+                <div class="last-podcast-item__new-label wow animated rubberBand" data-wow-delay="0.4s"></div>
             `;
 
             this.createNotifications(lastPodcast);
@@ -89,6 +87,11 @@ class Tamplate{
 
         }, this.notificationDelay);
         this.notificationDelay += 5000;
+    }
+
+    getPlayBubble(){
+        const bubble = $('div').attr({ class: 'last-podcast-item__play-bubble' });
+        return bubble;
     }
 }
 

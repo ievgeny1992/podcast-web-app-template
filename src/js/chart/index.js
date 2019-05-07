@@ -43,7 +43,9 @@ class PodcastChart{
                     pointHoverBackgroundColor: this.gradientStroke,
                     pointHoverBorderColor: this.gradientStroke,
                     fill: false,
-                    pointRadius: 4
+                    pointRadius: 1,
+                    pointHoverRadius: 5,
+                    pointHitRadius: 5
                 }]
             },
             options: {
