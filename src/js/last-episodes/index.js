@@ -46,7 +46,7 @@ class LastEpisode{
         const players = Plyr.setup('.js-player');
 
         players.forEach(player => {
-            player.on('playing', (event, self) => {
+            player.on('playing', (event) => {
                 const instance = event.detail.plyr;
 
                 // const currentTime = instance.currentTime;
@@ -56,8 +56,6 @@ class LastEpisode{
                 const $lastPodcastItem = $plyrContainer.closest('.last-podcast-item');
                 const $label = $lastPodcastItem.find('.last-podcast-item__new-label');
 
-                $lastPodcastItem.append(`<div class="last-podcast-item__play-bubble"></div>`);
-
                 if ($label.length) {
                     $label.css('animation-delay', '0s');
                     $label.css('animation-name', 'bounceOut');
@@ -66,28 +64,29 @@ class LastEpisode{
                     const episodeId = $lastPodcastItem.attr('data-id');
                     this.checkListenFlag(episodeId);
                 }
+
+                this.createPlayBubble(instance);
             })
 
             player.on('pause', event => {
                 const instance = event.detail.plyr;
-                const $plyrContainer = $(instance.elements.container);
-                const $lastPodcastItem = $plyrContainer.closest('.last-podcast-item');
-                
-                $lastPodcastItem.find('.last-podcast-item__play-bubble').remove();
+                this.removePlayBubble(instance);
             })
         });
     }
 
-    createPlayBubble(event){
-        const instance = event.detail.plyr;
+    createPlayBubble(instance){
         const $plyrContainer = $(instance.elements.container);
         const $lastPodcastItem = $plyrContainer.closest('.last-podcast-item');
 
-        if ( event.type == 'playing' ) {
-            $lastPodcastItem.append( this.template.getPlayBubble() );
-        }
+        $lastPodcastItem.append( this.template.getPlayBubble() );
+    }
 
-        if ( event.type == 'pause' ) $lastPodcastItem.find('.last-podcast-item__play-bubble').remove();
+    removePlayBubble(instance){
+        const $plyrContainer = $(instance.elements.container);
+        const $lastPodcastItem = $plyrContainer.closest('.last-podcast-item');
+
+        $lastPodcastItem.find('.last-podcast-item__play-bubble').remove();
     }
 
     checkListenFlag(episodeId) {

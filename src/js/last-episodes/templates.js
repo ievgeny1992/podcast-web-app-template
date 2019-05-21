@@ -4,7 +4,7 @@ moment.locale('ru');
 class Tamplate{
     constructor() {
         this.$notificationBlock = $('.js-notifications');
-        this.notificationDelay = 2000;
+        this.notificationDelay = 5000;
     }
 
     createLastPodcast(lastPodcast) {
@@ -64,7 +64,7 @@ class Tamplate{
 
         const notification = $(`
             <div class="notification animated slideInRight">
-                <div class="notification__marker wow animated rubberBand" data-wow-delay="0.8s"></div>
+                <div class="notification__marker"></div>
                 <img src="${podcast.cover}" class="notification__logo" alt="${podcast.title}">
                 <div class="notification__content">
                     <p class="notification__text">
@@ -77,20 +77,19 @@ class Tamplate{
                 </div>
             </div>      
         `);
-        this.$notificationBlock.append(notification);
         this.showNotifications(notification);
     }
 
     showNotifications(item) {
         setTimeout(() => {
-            item.css('display', 'flex').delay(3500).fadeOut(500);
-
+            this.$notificationBlock.append(item);
+            item.delay(4500).fadeOut(500);
         }, this.notificationDelay);
-        this.notificationDelay += 5000;
+        this.notificationDelay += 7000;
     }
 
     getPlayBubble(){
-        const bubble = $('div').attr({ class: 'last-podcast-item__play-bubble' });
+        const bubble = $('<div>').attr({ class: 'last-podcast-item__play-bubble' });
         return bubble;
     }
 }

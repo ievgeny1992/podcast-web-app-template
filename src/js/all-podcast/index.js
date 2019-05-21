@@ -17,8 +17,7 @@ class AllPodcastList{
     }
 
     getPodcast() {
-        var allPodcastItems = '';
-        var url = this.url + 'all_podcast';
+        const url = this.url + 'all_podcast';
         this.template = new Tamplate();
 
         fetch(url)
@@ -26,18 +25,48 @@ class AllPodcastList{
                 return response.json();
             })
             .then(allPodcasts => {
-                allPodcasts.forEach(podcast => {
-                    allPodcastItems += this.template.getPodcastList(podcast);
-                });
-
-                this.podcastList.append(allPodcastItems);
-                this.createHandlerDeletePodcast();
-                
-                $('body').trigger('show-last-episodes', [allPodcasts]);
+                this.getPodcastData(allPodcasts);
+                this.createHandlerShowLastEpisodes(allPodcasts);
             })
             .catch((error) => {
                 console.log('Error: ' + error);
             });
+    }
+
+    getPodcastData(allPodcasts){
+        allPodcasts.forEach((podcast, index) => {
+            this.getEpisodeCount(podcast);
+        });
+    }
+
+    getEpisodeCount(podcast){
+        const podcastId = podcast.id;
+        const url = this.url + 'episode_count/' + podcastId;
+
+        $.getJSON(url, (data) => {
+            podcast.total = data.total;
+            this.getEpisodeCountListened(podcast);
+        });
+    }
+
+    getEpisodeCountListened(podcast, total){
+        const podcastId = podcast.id;
+        const url = this.url + 'episode_count_listened/' + podcastId;
+
+        $.getJSON(url, (data) => {
+            podcast.listened =  data.total;
+            this.createPodcastList(podcast);
+        });
+    }
+
+    createPodcastList(podcast){
+        const podcastItem = this.template.getPodcast(podcast);
+        this.podcastList.append(podcastItem);
+        this.createHandlerDeletePodcast();
+    }
+
+    createHandlerShowLastEpisodes(allPodcasts){
+        $('body').trigger('show-last-episodes', [allPodcasts]);
     }
 
     createHandlerDeletePodcast() {

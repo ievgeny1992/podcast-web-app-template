@@ -129,6 +129,70 @@ body{
     background-color: @block-color;
     box-shadow: @box-shadow;
 
+    &__menu-switcher{
+        display: block;
+        margin-right: 15px;
+        margin-left: 15px;
+        padding: 3px;
+        width: 24px;
+        height: 24px;
+        position: relative;
+
+        &:before {
+            content:"";
+            display: block;
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background-color: #dedee0;
+            border-radius: 10px;
+            top: 50%;
+            transform-origin: 0 1px;
+            transition: all .1s linear;
+            transform: translateY(-6px);
+        }
+
+        &:after {
+            content:"";
+            display: block;
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background-color: #dedee0;
+            border-radius: 10px;
+            top: 50%;
+            transform-origin: 0 1px;
+            transition: all .1s linear;
+            transform: translateY(6px);
+        }
+
+        &_open{
+            &:before {
+                content:"";
+                width: 11px;
+                transform: rotate(-45deg) translateX(-1px);
+            }
+    
+            &:after {
+                content:"";
+                width: 11px;
+                transform: rotate(45deg) translateX(-1px);
+            }
+        }
+
+        & span{
+            display: block;
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background-color: #dedee0;
+            border-radius: 10px;
+            top: 50%;
+            transform-origin: 0 1px;
+            transition: all .1s linear;
+        }
+    }
+
     &__wrap{
         padding: 10px 10px;
 
@@ -395,6 +459,43 @@ body{
         &__info{
             padding-left: 15px;
             align-self: center;
+
+            @media @tablet {
+                padding-left: 20px;
+            }
+        }
+
+        &-progress{
+            padding: 5px 0px 10px 0px;
+            &__text{
+                font-family: @text-font;
+                font-weight: 700;
+                color: @text-color;
+                font-size: 12px;
+                line-height: 20px;
+                margin: 0px;
+
+                @media @desktop {
+                    font-size: 13px;
+                }
+            }
+
+            &__percent{
+                text-align: right;
+            }
+
+            &__bar{
+                width: 100%;
+                background-color: #6b7282;
+                border-radius: 10px;
+                margin: 10px auto;
+
+                &_load{
+                    height: 6px;
+                    background-color: @highlight-color;
+                    border-radius: 10px;
+                }
+            }
         }
     }
 }
@@ -530,6 +631,10 @@ body{
         &__info{
             padding-left: 15px;
             align-self: center;
+
+            @media @tablet {
+                padding-left: 20px;
+            }
         }
 
         &__wrap{
@@ -643,17 +748,25 @@ body{
 .notification{
     position: fixed;
     z-index: 1000;
-    display: none;
+    display: flex;
     align-items: center;
     flex-direction: row;
-    bottom: 15px;
-    right: 15px;
-    width: 300px;
+    bottom: 10px;
+    left: 25px;
+    width: ~"calc(100% - 50px)";
     background-color: @block-color;
     padding: 14px;
     border-radius: @border-radius;
     box-sizing: border-box;
     box-shadow: @notification-box-shadow;
+
+    @media @tablet {
+        left: auto;
+        right: 20px;
+        bottom: 15px;
+        width: 350px;
+        padding: 20px;
+    }
 
     &__marker {
         position: absolute;
@@ -664,12 +777,6 @@ body{
         width: 15px;
         background-color: #21ba45;
         border-radius: 50%;
-    }
-
-    @media @tablet {
-        right: 20px;
-        width: 350px;
-        padding: 20px;
     }
 
     &__logo{

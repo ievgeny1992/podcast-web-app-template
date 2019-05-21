@@ -113,7 +113,7 @@ class Tamplate{
                                 <img src="${podcast.cover}" class="calendar-item__logo" alt="${podcast.title}">
                             </div>
                             <div class="calendar-item__content">
-                                <p class="calendar-item__title">
+                                <p class="calendar-item__title" title="${podcast.title}">
                                     ${podcast.title}
                                 </p>  
                             </div>
