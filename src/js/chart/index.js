@@ -107,7 +107,7 @@ class PodcastChart{
                 currentYear--;
             }
 
-            var url = this.url + 'get_episode_in_month/' + currentMonth + '&' + currentYear;
+            var url = this.url + 'get_count_episode_in_month/' + currentMonth + '&' + currentYear;
             this.getChartData(i, url);
     
             month++;
@@ -120,7 +120,7 @@ class PodcastChart{
                 return response.json();
             })
             .then(json => {
-                const count = json.length;
+                const count = json.total;
                 this.podcastChart.data.datasets[0].data[index] = count;
                 this.podcastChart.update();
             })
