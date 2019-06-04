@@ -78,42 +78,6 @@ class AllPodcastList{
     deletePodcast(target) {
         $(target).fadeOut(500);
     }
-
-
-    /* ************************************************************ */
-
-    // async finishDataLoad(){
-    //     var allPodcastArray = [];
-    //     const allPodcast = await this.loadAllPodcast();
-    //     const count = await this.loadPodcastCount(allPodcast);
-    //     console.log(count);
-
-    // }
-
-    // async loadAllPodcast(){
-    //     const url = this.url + 'all_podcast';
-    //     this.template = new Tamplate();
-
-    //     return await fetch(url)
-    //         .then(response => response.json())
-    //         .catch((error) => {
-    //             console.log('Error: ' + error);
-    //         });
-    // }
-
-    // loadPodcastCount(allPodcast){
-    //     var count =  allPodcast.forEach(async (element) => {
-    //         const podcastId = element.id;
-    //         const url = this.url + 'episode_count/' + podcastId;
-
-    //         return await fetch(url)
-    //             .then(response => response.json())
-    //             .catch((error) => {
-    //                 console.log('Error: ' + error);
-    //             });
-    //     });
-    //     return count;
-    // }
 }
 
 module.exports = AllPodcastList;

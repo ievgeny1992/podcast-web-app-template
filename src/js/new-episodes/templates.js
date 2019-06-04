@@ -36,7 +36,7 @@ class Tamplate{
                             <p class="last-podcast-item__content">
                                 ${content}
                             </p>
-                            <audio class="js-player" controls>
+                            <audio class="js-player" data-id="${lastPodcast.id}" data-time="${lastPodcast.currentTime}" controls>
                                 <source src="${lastPodcast.mp3}" type="audio/mp3" />
                             </audio>
                         </div>

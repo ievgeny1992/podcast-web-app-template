@@ -17,9 +17,10 @@ class LastEpisode{
     }
 
     getLastEpisode(allPodcasts) {
+        this.template = new Tamplate();
+
         allPodcasts.forEach(podcast => {
             const url = this.url + 'get_last_podcast/' + podcast.id;
-            this.template = new Tamplate();
 
             fetch(url)
                 .then(response => {
@@ -34,7 +35,7 @@ class LastEpisode{
                     } else {
                         this.lastPodcast.append($lastEpisode);
                     }
-                    this.loadPlayer();
+                    this.loadPlayer($lastEpisode);
                 })
                 .catch((error) => {
                     console.log('Error: ' + error);
@@ -42,36 +43,49 @@ class LastEpisode{
         });
     }
 
-    loadPlayer() {
-        const players = Plyr.setup('.js-player');
+    loadPlayer(elem) {
+        const player = elem.find('.js-player');
+        const episodeId = player.data('id');
+        let time = player.data('time');
 
-        players.forEach(player => {
-            player.on('playing', (event) => {
-                const instance = event.detail.plyr;
+        let playFlag = new Boolean(true);
 
-                // const currentTime = instance.currentTime;
-                // console.log(currentTime);
+        let plyrPlayer = new Plyr( player );
 
-                const $plyrContainer = $(instance.elements.container);
-                const $lastPodcastItem = $plyrContainer.closest('.last-podcast-item');
-                const $label = $lastPodcastItem.find('.last-podcast-item__new-label');
+        plyrPlayer.on('play', (event) => {
+            let instance = event.detail.plyr;
 
-                if ($label.length) {
-                    $label.css('animation-delay', '0s');
-                    $label.css('animation-name', 'bounceOut');
-                    $label.css('animation-fill-mode', 'both');
-
-                    const episodeId = $lastPodcastItem.attr('data-id');
-                    this.checkListenFlag(episodeId);
+            if ( time && playFlag == true){
+                time = time - 15;
+                if ( time < 0 ) {
+                    time = 0;
                 }
 
-                this.createPlayBubble(instance);
-            })
+                instance.currentTime = time;
+                playFlag = false;
+            }
+    
+            const $plyrContainer = $(instance.elements.container);
+            const $lastPodcastItem = $plyrContainer.closest('.last-podcast-item');
+            const $label = $lastPodcastItem.find('.last-podcast-item__new-label');
 
-            player.on('pause', event => {
-                const instance = event.detail.plyr;
-                this.removePlayBubble(instance);
-            })
+            if ($label.length) {
+                $label.css('animation-delay', '0s');
+                $label.css('animation-name', 'bounceOut');
+                $label.css('animation-fill-mode', 'both');
+
+                this.checkListenFlag(episodeId);
+            }
+
+            this.createPlayBubble(instance);
+        });
+
+        plyrPlayer.on('pause', event => {
+            let instance = event.detail.plyr;
+            this.removePlayBubble(instance);
+
+            const currentTime = Math.ceil(instance.currentTime);
+            this.setCurrentTimeForEpisode(episodeId, currentTime);
         });
     }
 
@@ -89,6 +103,23 @@ class LastEpisode{
         $lastPodcastItem.find('.last-podcast-item__play-bubble').remove();
     }
 
+    setCurrentTimeForEpisode(episodeId, currentTime){
+        var url = this.url + 'set_current_time/id/' + episodeId + '/currentTime/' + currentTime;
+        const formData = new FormData();
+        formData.append('id', episodeId);
+
+        fetch(url, {
+            method: 'PUT',
+            body: formData
+        })
+        .then(response => {
+            return response.json();
+        })
+        .catch((error) => {
+            console.log('Error: ' + error);
+        });
+    }
+
     checkListenFlag(episodeId) {
         var url = this.url + 'check_listen_flag/' + episodeId;
         const formData = new FormData();
@@ -97,13 +128,13 @@ class LastEpisode{
         fetch(url, {
             method: 'PUT',
             body: formData
-            })
-            .then(response => {
-                return response.json();
-            })
-            .catch((error) => {
-                console.log('Error: ' + error);
-            });
+        })
+        .then(response => {
+            return response.json();
+        })
+        .catch((error) => {
+            console.log('Error: ' + error);
+        });
     }
 
     deletePodcast(target) {
