@@ -1,4 +1,4 @@
-const Tamplate = require('./templates.js');
+import Tamplate from './templates.js';
 
 class ReleaseCalendar{
     constructor(url){
@@ -113,4 +113,4 @@ class ReleaseCalendar{
     }
 }
 
-module.exports = ReleaseCalendar;
+export default ReleaseCalendar;

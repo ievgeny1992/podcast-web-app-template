@@ -1,4 +1,4 @@
-const Loader = require('./loader');
+import Loader from './loader';
 
 const selectorList = {
     allPodcastElem: 'js-podcast-list',

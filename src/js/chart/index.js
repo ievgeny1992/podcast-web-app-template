@@ -1,10 +1,10 @@
-var Chart = require('chart.js');
-const moment = require('moment');
+import Chart, { defaults } from 'chart.js';
+import moment, { locale } from 'moment';
 
 class PodcastChart{
     constructor(url){
         this.url = url;
-        moment.locale('ru');
+        locale('ru');
         this.initHandlers();
     }
 
@@ -130,10 +130,10 @@ class PodcastChart{
     }
 
     setChartDefaults(){
-        Chart.defaults.global.defaultFontFamily = 'Basis Grotesque Pro Light';
-        Chart.defaults.global.defaultFontColor = '#6b7282';
-        Chart.defaults.global.defaultFontSize = 14;
+        defaults.global.defaultFontFamily = 'Basis Grotesque Pro Light';
+        defaults.global.defaultFontColor = '#6b7282';
+        defaults.global.defaultFontSize = 14;
     }
 }
 
-module.exports = PodcastChart;
+export default PodcastChart;

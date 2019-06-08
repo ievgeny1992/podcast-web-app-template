@@ -1,13 +1,13 @@
-const AllPodcastList = require('../all-podcast');
-const NewEpisode = require('../new-episodes');
-const ReleaseCalendar = require('../release-calendar');
-const PodcastChart = require('../chart');
+import AllPodcastList from '../all-podcast';
+import NewEpisode from '../new-episodes';
+import ReleaseCalendar from '../release-calendar';
+import PodcastChart from '../chart';
 
-const config = require('../config.json');
+import { host } from '../config.json';
 
 class Loader {
     constructor(argArray) {
-        this.url = config.host;;
+        this.url = host;;
 
         this.allPodcastList = new AllPodcastList(this.url);
         this.newEpisode = new NewEpisode(this.url);
@@ -16,4 +16,4 @@ class Loader {
     }
 }
 
-module.exports = Loader;
+export default Loader;

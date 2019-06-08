@@ -72,4 +72,4 @@ class Tamplate{
     }
 }
 
-module.exports = Tamplate;
+export default Tamplate;

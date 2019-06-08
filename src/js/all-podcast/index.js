@@ -1,4 +1,4 @@
-const Tamplate = require('./templates.js');
+import Tamplate from './templates.js';
 
 class AllPodcastList{
     constructor(url){
@@ -66,7 +66,7 @@ class AllPodcastList{
     }
 
     createHandlerShowLastEpisodes(allPodcasts){
-        $('body').trigger('show-last-episodes', [allPodcasts]);
+        $('body').trigger('show-new-episodes', [allPodcasts]);
     }
 
     createHandlerDeletePodcast() {
@@ -80,4 +80,4 @@ class AllPodcastList{
     }
 }
 
-module.exports = AllPodcastList;
+export default AllPodcastList;

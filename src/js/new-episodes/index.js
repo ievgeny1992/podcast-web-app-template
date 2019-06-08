@@ -1,9 +1,9 @@
-const Tamplate = require('./templates.js');
+import Tamplate from './templates.js';
 
 class LastEpisode{
     constructor(url){
         this.url = url;
-        this.lastPodcast = $('.js-last-podcast');
+        this.newPodcast = $('.js-new-episode');
 
         this.initHandlers();
     }
@@ -11,12 +11,12 @@ class LastEpisode{
     initHandlers(){
         const $body = $('body');
         
-        $body.on('show-last-episodes', (self, allPodcasts) => {
-            this.getLastEpisode(allPodcasts);
+        $body.on('show-new-episodes', (self, allPodcasts) => {
+            this.getNewEpisode(allPodcasts);
         });
     }
 
-    getLastEpisode(allPodcasts) {
+    getNewEpisode(allPodcasts) {
         this.template = new Tamplate();
 
         allPodcasts.forEach(podcast => {
@@ -27,15 +27,15 @@ class LastEpisode{
                     return response.json();
                 })
                 .then(json => {
-                    const $lastEpisode = $(this.template.createLastPodcast(json[0]));
-                    const $newEpisodeLabel = $lastEpisode.find('.last-podcast-item__new-label');
+                    const $newEpisode = $(this.template.createNewPodcast(json[0]));
+                    const $newEpisodeLabel = $newEpisode.find('.new-episode-item__new-label');
 
                     if ($newEpisodeLabel.length) {
-                        this.lastPodcast.prepend($lastEpisode);
+                        this.newPodcast.prepend($newEpisode);
                     } else {
-                        this.lastPodcast.append($lastEpisode);
+                        this.newPodcast.append($newEpisode);
                     }
-                    this.loadPlayer($lastEpisode);
+                    this.loadPlayer($newEpisode);
                 })
                 .catch((error) => {
                     console.log('Error: ' + error);
@@ -52,8 +52,8 @@ class LastEpisode{
 
         let plyrPlayer = new Plyr( player );
 
-        plyrPlayer.on('play', (event) => {
-            let instance = event.detail.plyr;
+        plyrPlayer.on('playing', (event) => {
+            const instance = event.detail.plyr;
 
             if ( time && playFlag == true){
                 time = time - 15;
@@ -81,7 +81,7 @@ class LastEpisode{
         });
 
         plyrPlayer.on('pause', event => {
-            let instance = event.detail.plyr;
+            const instance = event.detail.plyr;
             this.removePlayBubble(instance);
 
             const currentTime = Math.ceil(instance.currentTime);
@@ -142,4 +142,4 @@ class LastEpisode{
     }
 }
 
-module.exports = LastEpisode;
+export default LastEpisode;

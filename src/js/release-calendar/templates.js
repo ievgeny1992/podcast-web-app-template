@@ -1,8 +1,8 @@
-const moment = require('moment');
+import moment, { locale } from 'moment';
 
 class Tamplate{
     constructor() {
-        moment.locale('ru');
+        locale('ru');
 
         this.currentDate = null;
     }
@@ -186,4 +186,4 @@ class Tamplate{
     }
 }
 
-module.exports = Tamplate;
+export default Tamplate;
