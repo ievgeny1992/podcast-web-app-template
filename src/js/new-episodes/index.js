@@ -3,7 +3,7 @@ import Tamplate from './templates.js';
 class LastEpisode{
     constructor(url){
         this.url = url;
-        this.newPodcast = $('.js-new-episode');
+        this.newEpisodeBlock = $('.js-new-episode');
 
         this.initHandlers();
     }
@@ -19,8 +19,14 @@ class LastEpisode{
     getNewEpisode(allPodcasts) {
         this.template = new Tamplate();
 
+        const header = this.template.getHeader();
+        this.newEpisodeBlock.append(header);
+
+        const newEpisodeWrap = this.template.getNewEpisodeWrapper();
+        this.newEpisodeBlock.append(newEpisodeWrap);
+
         allPodcasts.forEach(podcast => {
-            const url = this.url + 'get_last_podcast/' + podcast.id;
+            const url = this.url + 'get_last_podcast/' + podcast.podcast_id;
 
             fetch(url)
                 .then(response => {
@@ -31,9 +37,9 @@ class LastEpisode{
                     const $newEpisodeLabel = $newEpisode.find('.new-episode-item__new-label');
 
                     if ($newEpisodeLabel.length) {
-                        this.newPodcast.prepend($newEpisode);
+                        newEpisodeWrap.prepend($newEpisode);
                     } else {
-                        this.newPodcast.append($newEpisode);
+                        newEpisodeWrap.append($newEpisode);
                     }
                     this.loadPlayer($newEpisode);
                 })
@@ -66,8 +72,8 @@ class LastEpisode{
             }
     
             const $plyrContainer = $(instance.elements.container);
-            const $lastPodcastItem = $plyrContainer.closest('.last-podcast-item');
-            const $label = $lastPodcastItem.find('.last-podcast-item__new-label');
+            const $newPodcastItem = $plyrContainer.closest('.new-episode-item');
+            const $label = $newPodcastItem.find('.new-episode-item__new-label');
 
             if ($label.length) {
                 $label.css('animation-delay', '0s');
@@ -91,16 +97,16 @@ class LastEpisode{
 
     createPlayBubble(instance){
         const $plyrContainer = $(instance.elements.container);
-        const $lastPodcastItem = $plyrContainer.closest('.last-podcast-item');
+        const $newEpisodeItem = $plyrContainer.closest('.new-episode-item');
 
-        $lastPodcastItem.append( this.template.getPlayBubble() );
+        $newEpisodeItem.append( this.template.getPlayBubble() );
     }
 
     removePlayBubble(instance){
         const $plyrContainer = $(instance.elements.container);
-        const $lastPodcastItem = $plyrContainer.closest('.last-podcast-item');
+        const $newEpisodeItem = $plyrContainer.closest('.new-episode-item');
 
-        $lastPodcastItem.find('.last-podcast-item__play-bubble').remove();
+        $newEpisodeItem.find('.new-episode-item__play-bubble').remove();
     }
 
     setCurrentTimeForEpisode(episodeId, currentTime){

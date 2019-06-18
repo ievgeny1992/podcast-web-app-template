@@ -5,6 +5,8 @@ class AllPodcastList{
         this.url = url;
         this.podcastList = $('.js-podcast-list');
 
+        this.podcastListWrap = null;
+
         this.initHandlers();
     }
 
@@ -12,11 +14,11 @@ class AllPodcastList{
         const $body = $('body');
         
         $body.on('show-all-podcasts', () => {
-            this.getPodcast();
+            this.getAllPodcast();
         });
     }
 
-    getPodcast() {
+    getAllPodcast() {
         const url = this.url + 'all_podcast';
         this.template = new Tamplate();
 
@@ -25,6 +27,12 @@ class AllPodcastList{
                 return response.json();
             })
             .then(allPodcasts => {
+                const header = this.template.getHeader();
+                this.podcastList.append(header);
+
+                this.podcastListWrap = this.template.getPodcastListWrapper();
+                this.podcastList.append(this.podcastListWrap);
+
                 this.getPodcastData(allPodcasts);
                 this.createHandlerShowLastEpisodes(allPodcasts);
             })
@@ -40,7 +48,7 @@ class AllPodcastList{
     }
 
     getEpisodeCount(podcast){
-        const podcastId = podcast.id;
+        const podcastId = podcast.podcast_id;
         const url = this.url + 'episode_count/' + podcastId;
 
         $.getJSON(url, (data) => {
@@ -50,7 +58,7 @@ class AllPodcastList{
     }
 
     getEpisodeCountListened(podcast){
-        const podcastId = podcast.id;
+        const podcastId = podcast.podcast_id;
         const url = this.url + 'episode_count_listened/' + podcastId;
 
         $.getJSON(url, (data) => {
@@ -61,7 +69,7 @@ class AllPodcastList{
 
     createPodcastList(podcast){
         const podcastItem = this.template.getPodcast(podcast);
-        this.podcastList.append(podcastItem);
+        this.podcastListWrap.append(podcastItem);
         this.createHandlerDeletePodcast();
     }
 
@@ -70,8 +78,8 @@ class AllPodcastList{
     }
 
     createHandlerDeletePodcast() {
-        $('.user-podcast-item__wrap').on('click', '.user-podcast-item__close', (self) => {
-            this.deletePodcast(self.delegateTarget);
+        $('.user-podcast-item__wrap').on('click', '.user-podcast-item__close', event => {
+            this.deletePodcast(event.delegateTarget);
         });
     }
 

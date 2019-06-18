@@ -3,6 +3,11 @@ class Tamplate{
         this.podcastList = $('.js-podcast-list');
     }
 
+    getPodcastListWrapper(){
+        const $wrapper = $('<div>').attr({ class: 'row' });
+        return $wrapper;
+    }
+
     getPodcast(podcast) {
         const $wrap = $('<div>').attr({ class: 'col-xs-12 col-sm-6 col-md-4 user-podcast-item__wrap' });
         const $item = $('<div>').attr({ class: 'user-podcast-item' });
@@ -46,7 +51,7 @@ class Tamplate{
     }
 
     getProgressBar(listened, total){
-        const totalPercent = Math.round( listened * 100 / total );
+        const totalPercent = Math.floor( listened * 100 / total );
 
         const $item = $('<div>').attr({ class: 'user-podcast-item-progress' });
         const $itemInner = `
@@ -69,6 +74,20 @@ class Tamplate{
         const $progressBar = $('<div>').append($item);
         
         return $progressBar;
+    }
+
+    getHeader(){
+        const $header = `
+            <div class="row">
+                <div class="col-xs-12">
+                    <h2 class="podcast-app__title">
+                        Мои подкасты
+                    </h2>
+                </div>
+            </div>
+        `;
+
+        return $header;
     }
 }
 

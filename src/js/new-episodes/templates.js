@@ -7,6 +7,11 @@ class Tamplate{
         this.notificationDelay = 5000;
     }
 
+    getNewEpisodeWrapper(){
+        const $wrapper = $('<div>').attr({ class: 'row' });
+        return $wrapper;
+    }
+
     createNewPodcast(newPodcast) {
         var date = new Date(newPodcast.published);
         date = date.toLocaleString("ru", { day: '2-digit', month: '2-digit', year: '2-digit' });
@@ -78,6 +83,20 @@ class Tamplate{
             </div>      
         `);
         this.showNotifications(notification);
+    }
+
+    getHeader(){
+        const $header = `
+            <div class="row">
+                <div class="col-xs-12">
+                    <h2 class="podcast-app__title">
+                        Последние эпизоды
+                    </h2>
+                </div>
+            </div>
+        `;
+
+        return $header;
     }
 
     showNotifications(item) {
