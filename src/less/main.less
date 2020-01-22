@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:300,500,700,800,900');
-@import url('https://fonts.googleapis.com/css?family=Roboto&subset=cyrillic');
-
 @import 'media';
 @import 'fontello';
 
@@ -73,14 +70,14 @@ body{
         font-family: @header-font;
         font-weight: 700;
         color: @text-color;
-        font-size: 21px;
+        font-size: 17px;
         margin: 25px 0px;
-    
+
         @media @tablet {
             font-size: 28px;
             margin: 55px 0px;
         }
-    
+
         @media @desktop {
             font-size: 29px;
         }
@@ -173,7 +170,7 @@ body{
                 width: 11px;
                 transform: rotate(-45deg) translateX(-1px);
             }
-    
+
             &:after {
                 content:"";
                 width: 11px;
@@ -200,7 +197,7 @@ body{
         @media @tablet {
             padding: 10px 15px;
         }
-    
+
         @media @desktop {
             padding: 10px 20px;
         }
@@ -211,11 +208,11 @@ body{
         font-weight: 700;
         color: @text-color;
         font-size: 15px;
-    
+
         @media @tablet {
             font-size: 18px;
         }
-    
+
         @media @desktop {
             font-size: 20px;
         }
@@ -236,7 +233,7 @@ body{
 
     &-img__wrap{
         position: relative;
-        
+
         &:after{
             content: '';
             position: absolute;
@@ -268,17 +265,17 @@ body{
         font-family: @text-font;
         font-weight: 700;
         color: @text-color;
-    
+
         @media @tablet {
             display: block;
             font-size: 12px;
         }
-    
+
         @media @desktop {
             font-size: 13px;
         }
     }
-    
+
 }
 /* avatar */
 
@@ -292,11 +289,11 @@ body{
             padding-top: 40px;
             padding-bottom: 10px;
         }
-    
+
         @media @desktop {
             padding-top: 50px;
             padding-bottom: 10px;
-        } 
+        }
     }
 
     &__text{
@@ -309,7 +306,7 @@ body{
         @media @tablet {
 
         }
-    
+
         @media @desktop {
 
         }
@@ -331,11 +328,11 @@ body{
             padding-top: 40px;
             padding-bottom: 10px;
         }
-    
+
         @media @desktop {
             padding-top: 50px;
             padding-bottom: 10px;
-        } 
+        }
     }
     &-item{
         position: relative;
@@ -343,12 +340,12 @@ body{
         background-color: @block-color;
         box-sizing: border-box;
         border-radius: @border-radius;
-        padding: 18px;
+        padding: 14px;
 
         @media @tablet {
             padding: 25px;
         }
-    
+
         @media @desktop {
             padding: 30px;
         }
@@ -400,24 +397,24 @@ body{
             display: -webkit-box;
             overflow: hidden;
             -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical; 
+            -webkit-box-orient: vertical;
             font-family: @title-font;
             font-weight: 700;
             color: @text-color;
             margin: 0px;
-            font-size: 16px;
-        
+            font-size: 14px;
+
             @media @tablet {
                 font-size: 18px;
             }
-        
+
             @media @desktop {
                 font-size: 19px;
             }
         }
 
         &__description{
-            display: -webkit-box;
+            display: none;
             overflow: hidden;
             -webkit-line-clamp: none;
             -webkit-box-orient: vertical;
@@ -428,6 +425,7 @@ body{
             line-height: 20px;
 
             @media @tablet {
+                display: -webkit-box;
                 -webkit-line-clamp: 1;
             }
             @media @desktop {
@@ -446,10 +444,15 @@ body{
 
         &__logo{
             align-self: center;
-            width: 67px;
-            height: 67px;
-            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            border-radius: 15px;
             box-shadow: @box-shadow;
+
+            @media @tablet {
+                width: 80px;
+                height: 80px;
+            }
 
             @media @desktop {
                 width: 80px;
@@ -458,7 +461,7 @@ body{
         }
 
         &__info{
-            padding-left: 15px;
+            padding-left: 10px;
             align-self: center;
 
             @media @tablet {
@@ -511,11 +514,11 @@ body{
             padding-top: 40px;
             padding-bottom: 10px;
         }
-    
+
         @media @desktop {
             padding-top: 50px;
             padding-bottom: 10px;
-        } 
+        }
     }
 
     &-item{
@@ -524,12 +527,12 @@ body{
         border-radius: @border-radius;
         box-sizing: border-box;
         margin-bottom: 15px;
-        padding: 18px;
+        padding: 14px;
 
         @media @tablet {
             padding: 25px;
         }
-    
+
         @media @desktop {
             padding: 30px;
         }
@@ -558,18 +561,18 @@ body{
             display: -webkit-box;
             overflow: hidden;
             -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical; 
+            -webkit-box-orient: vertical;
             font-family: @title-font;
             font-weight: 700;
             color: @text-color;
             margin: 0px;
-            font-size: 16px;
+            font-size: 14px;
 
             @media @tablet {
                 font-size: 18px;
                 -webkit-line-clamp: 2;
             }
-        
+
             @media @desktop {
                 font-size: 19px;
             }
@@ -586,7 +589,7 @@ body{
             @media @tablet {
                 font-size: 13px;
             }
-        
+
             @media @desktop {
                 font-size: 13px;
             }
@@ -595,12 +598,17 @@ body{
         &__new-label{
             position: absolute;
             z-index: 1000;
-            width: 12px;
-            height: 12px;
+            width: 9px;
+            height: 9px;
             top: 10px;
             right: 10px;
             border-radius: 6px;
             background-color: #21ba45;
+
+            @media @tablet {
+                width: 12px;
+                height: 12px;
+            }
         }
 
         &__link{
@@ -610,7 +618,7 @@ body{
             text-decoration: none;
             color: #6B7282;
             font-size: 11px;
-        
+
             @media @desktop {
                 font-size: 13px;
             }
@@ -618,10 +626,15 @@ body{
 
         &__logo{
             align-self: center;
-            width: 67px;
-            height: 67px;
-            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            border-radius: 15px;
             box-shadow: @box-shadow;
+
+            @media @tablet {
+                width: 80px;
+                height: 80px;
+            }
 
             @media @desktop {
                 width: 80px;
@@ -644,11 +657,11 @@ body{
             @media @tablet {
                 padding: 25px;
             }
-        
+
             @media @desktop {
                 padding: 30px;
             }
-        }   
+        }
 
         &__list{
             font-family: @header-font;
@@ -656,7 +669,7 @@ body{
             color: @text-color;
             font-size: 14px;
             line-height: 23px;
-            margin-top: 0px; 
+            margin-top: 0px;
 
             @media @desktop {
                 font-size: 15px;
@@ -664,9 +677,9 @@ body{
         }
 
         &__content{
-            display: -webkit-box;
+            display: none;
             -webkit-line-clamp: 5;
-            -webkit-box-orient: vertical;  
+            -webkit-box-orient: vertical;
             text-overflow: ellipsis;
             overflow: hidden;
 
@@ -678,6 +691,7 @@ body{
             font-size: 15px;
 
             @media @tablet {
+                display: -webkit-box;
                 -webkit-line-clamp: 3;
             }
 
@@ -704,7 +718,7 @@ body{
             & ul{
                 padding-left: 20px;
                 white-space: nowrap;
-                overflow: hidden; 
+                overflow: hidden;
                 text-overflow: ellipsis;
             }
         }
@@ -730,7 +744,7 @@ body{
     @media @desktop {
         font-size: 16px;
         margin-top: 70px;
-    } 
+    }
 
     &__text{
         font-family: @header-font;
@@ -755,7 +769,8 @@ body{
     bottom: 10px;
     left: 25px;
     width: ~"calc(100% - 50px)";
-    background-color: @block-color;
+    background-color: rgba(40, 43, 53, .6);
+    backdrop-filter: saturate(180%) blur(10px);
     padding: 14px;
     border-radius: @border-radius;
     box-sizing: border-box;
@@ -783,7 +798,7 @@ body{
     &__logo{
         width: 60px;
         height: 60px;
-        border-radius: 50%;
+        border-radius: 15px;
         box-shadow: @box-shadow;
     }
 
@@ -795,7 +810,7 @@ body{
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical; 
+        -webkit-box-orient: vertical;
         font-family: @title-font;
         font-size: 13px;
         color: @text-color;
@@ -832,11 +847,11 @@ body{
             padding-top: 40px;
             padding-bottom: 10px;
         }
-    
+
         @media @desktop {
             padding-top: 50px;
             padding-bottom: 10px;
-        } 
+        }
     }
 
     &__row{
@@ -867,7 +882,7 @@ body{
 
         &_empty{
             display: none;
-    
+
             @media @desktop {
                 display: block;
             }
@@ -926,7 +941,7 @@ body{
         @media @tablet {
             font-size: 22px;
         }
-    
+
         @media @desktop {
             font-size: 24px;
         }
@@ -938,7 +953,7 @@ body{
             @media @tablet {
                 font-size: 24px;
             }
-        
+
             @media @desktop {
                 font-size: 27px;
             }
@@ -980,13 +995,13 @@ body{
             display: -webkit-box;
             overflow: hidden;
             -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical; 
+            -webkit-box-orient: vertical;
             margin: 0px;
 
             @media @desktop {
                 font-size: 13px;
                 -webkit-line-clamp: 1;
-                -webkit-box-orient: vertical; 
+                -webkit-box-orient: vertical;
             }
         }
     }
@@ -1002,11 +1017,11 @@ body{
             padding-top: 40px;
             padding-bottom: 10px;
         }
-    
+
         @media @desktop {
             padding-top: 50px;
             padding-bottom: 10px;
-        } 
+        }
     }
 }
 /* chart */
@@ -1041,7 +1056,7 @@ body{
     height: 1em;
     background-color: #fff;
 }
-  
+
 @keyframes spinner {
     50% {
         border-radius: 50%;

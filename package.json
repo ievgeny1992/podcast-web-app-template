@@ -1,6 +1,6 @@
 {
   "name": "podcast-web-app-template",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Podcast Web App Template",
   "main": "index.js",
   "scripts": {
@@ -10,29 +10,18 @@
   "author": "Evgeny Nadolinsky",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.4.0",
-    "@babel/preset-env": "^7.4.2",
-    "babel-loader": "^8.0.5",
-    "browser-sync": "^2.26.3",
-    "eslint": "^3.19.0",
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^4.0.0",
-    "gulp-babel": "^7.0.1",
-    "gulp-clean-css": "^4.0.0",
-    "gulp-ejs": "^3.3.0",
-    "gulp-htmlmin": "^4.0.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-uglify": "^3.0.2",
-    "jquery": "^3.3.1",
-    "stylelint": "^7.10.1",
-    "webpack": "^4.29.6",
-    "webpack-stream": "^4.0.3"
+    "browser-sync": "^2.26.7",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-ejs": "^5.0.0",
+    "gulp-less": "^4.0.1",
+    "gulp-rename": "^2.0.0",
+    "source-list-map": "^2.0.1",
+    "webpack-stream": "^5.2.1"
   },
   "dependencies": {
-    "chart.js": "^2.8.0",
-    "gulp-less": "^3.5.0",
-    "jquery.cookie": "^1.4.1",
-    "moment": "^2.24.0",
-    "natives": "^1.1.6"
+    "chart.js": "^2.9.3",
+    "moment": "^2.24.0"
   }
 }

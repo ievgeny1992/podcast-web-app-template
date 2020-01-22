@@ -1,16 +1,16 @@
 const gulp = require('gulp');
-const less = require('gulp-less');
+
 const browserSync = require('browser-sync');
+
+const ejs = require('gulp-ejs');
+const less = require('gulp-less');
+const webpack = require('webpack-stream');
+
 const autoprefixer = require('gulp-autoprefixer');
 const cleanCSS = require('gulp-clean-css');
-const ejs = require('gulp-ejs');
-const gutil = require('gulp-util');
-const htmlmin = require('gulp-htmlmin');
 const rename = require('gulp-rename');
-const uglify = require('gulp-uglify');
-const webpack = require('webpack');
-const webpackStream = require('webpack-stream');
 
+//BROWSER SYNC
 browserSync.create();
 
 browserSync.init({
@@ -21,93 +21,54 @@ browserSync.init({
     ]
 });
 
+// HTML
+gulp.task('html', () => {
+    return gulp.src('src/index.ejs')
+        .pipe(ejs())
+        .pipe(rename('index.html'))
+        .pipe(gulp.dest('./dist'));
+});
+
+// CSS
 gulp.task('styles', () => {
-    gulp.src('src/less/main.less')
+    return gulp.src('src/less/main.less')
         .pipe(less())
         .pipe(autoprefixer())
-        .pipe(cleanCSS({debug: true}, (details) => {
-            console.log(`${details.name}: ${details.stats.originalSize}`);
-            console.log(`${details.name}: ${details.stats.minifiedSize}`);
-        }))
+        .pipe(cleanCSS())
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('./dist/css'));
 });
 
+// SCRIPTS
+gulp.task('js', function() {
+    return gulp.src('src/js/main.js')
+        .pipe(webpack({
+            output: {
+                filename: 'js/main.js',
+            },
+        }))
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(gulp.dest('dist/'));
+});
+
+// IMAGES
 gulp.task('img', () => {
-    gulp.src('src/img/**/*.*')
+    return gulp.src('src/img/**/*.*')
         .pipe(gulp.dest('./dist/img'));
 });
 
+// FONTS
 gulp.task('font', () => {
-    gulp.src('src/font/**/*.*')
+    return gulp.src('src/font/**/*.*')
         .pipe(gulp.dest('./dist/font'));
 });
 
-gulp.task('js', function () {
-    return gulp.src('src/js/main.js')
-    .pipe(webpackStream({
-        output: {
-        filename: 'js/main.js',
-    },
-    module: {
-        rules: [{
-                test: /\.(js)$/,
-                exclude: /(node_modules)/,
-                loader: 'babel-loader',
-                options: {
-                    presets: [
-                        [
-                            "@babel/preset-env", {
-                                targets: {
-                                    node: "current"
-                                }
-                            }
-                        ]
-                    ]
-                }
-        }]
-    }
-    }))
-    .pipe(gulp.dest('./dist/'))
-    .pipe(rename({ suffix: '.min' }))
-    .pipe(gulp.dest('./dist/'));
+// WATCH
+gulp.task('watch', function() {
+    gulp.watch('src/**/*.ejs', gulp.parallel('html'));
+    gulp.watch('src/less/**/*.less', gulp.parallel('styles'));
 });
 
-gulp.task('js-min', function () {
-    return gulp.src('src/js/main.js')
-    .pipe(webpackStream({
-        output: {
-        filename: 'js/main.js',
-    },
-    module: {
-        rules: [{
-                test: /\.(js)$/,
-                exclude: /(node_modules)/,
-                loader: 'babel-loader',
-                options: {
-                    presets: ['@babel/preset-env']
-                }
-        }]
-    }
-    }))
-    .pipe(gulp.dest('./dist/'))
-    .pipe(uglify())
-    .pipe(rename({ suffix: '.min' }))
-    .pipe(gulp.dest('./dist/'));
-});
-
-gulp.task('html', () => {
-    gulp.src('src/index.ejs')
-        .pipe(ejs().on('error', gutil.log))
-        .pipe(rename('index.html'))
-        .pipe(htmlmin({collapseWhitespace: true}))
-        .pipe(gulp.dest('./dist'));
-});
-
-gulp.watch('src/less/**/*.less', ['styles']);
-gulp.watch('src/**/*.ejs', ['html']);
-gulp.watch('src/img/**/*.*', ['img']);
-gulp.watch('src/js/**/*.*', ['js']);
-
-gulp.task('default', ['styles','js', 'html', 'img', 'font']);
-gulp.task('build', ['styles','js-min', 'html', 'img', 'font']);
+gulp.task('default', gulp.parallel('html', 'styles', 'font', 'img', 'watch'));
+gulp.task('build', gulp.parallel('html', 'styles', 'font', 'img', 'watch'));
+gulp.task('build-js', gulp.parallel('html', 'js'));
